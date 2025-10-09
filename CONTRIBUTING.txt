@@ -13,10 +13,8 @@ https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_sty
 
 This guide differs from the official guide in two ways:
     Use 4 spaces instead of tabs for indentation (NOT EDITOR DEFAULT)
-    Directory names use kebab-case (example: static-animations/)
-        -- Note: most directory names will probably be single words, so it's
-           really just important to remember to use lowercase
-
+    Directory names use PascalCase (this isn't really a difference, it's just not
+        specified in the style guide.)
 
 
 Other quick notes from the guide before starting:
