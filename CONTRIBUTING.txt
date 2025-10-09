@@ -1,0 +1,38 @@
+========== BRANCHING PATTERN ==========
+
+    The general branching pattern for this project is to branch off of the "main"
+branch to make changes. As you develop on your seperate branch, pull main and merge
+it into your branch often. Merge your branch back into main once your change is made
+and tested. Discuss with the team if you need to merge a breaking change into the
+main branch.
+
+========== STYLE GUIDE ==========
+
+In general, this style guide follows Godot's official GD Script style guide at:
+https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/gdscript_styleguide.html#gdscript-style-guide
+
+This guide differs from the official guide in two ways:
+    Use 4 spaces instead of tabs for indentation (NOT EDITOR DEFAULT)
+    Directory names use kebab-case (example: static-animations/)
+        -- Note: most directory names will probably be single words, so it's
+           really just important to remember to use lowercase
+
+
+
+Other quick notes from the guide before starting:
+
+                -- Naming Conventions --
++--------------+---------------+---------------------------+
+|     Type     |  Convention   |          Example          |
++--------------+---------------+---------------------------+
+| File names   | snake_case    | yaml_parser.gd            |
+| Class names  | PascalCase    | class_name YAMLParser     |
+| Node names   | PascalCase    | Camera3D, Player          |
+| Functions    | snake_case    | func load_level():        |
+| Variables    | snake_case    | var particle_effect       |
+| Signals      | snake_case    | signal door_opened        |
+| Constants    | CONSTANT_CASE | const MAX_SPEED = 200     |
+| Enum names   | PascalCase    | enum Element              |
+| Enum members | CONSTANT_CASE | {EARTH, WATER, AIR, FIRE} |
++--------------+---------------+---------------------------+
+
