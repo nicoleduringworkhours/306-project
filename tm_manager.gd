@@ -58,25 +58,36 @@ func _init(x: int, y: int, init_state: int = 0, state_machine: Dictionary = {}, 
 ## [param y] y coordinate of the cell
 ## [param t] the action to apply
 func apply_transition(x: int, y: int, t: int):
+    # valid cell
     if x >= 0 and y >= 0 and x < cols and y < rows:
         var idx = x + y*cols
+
+        # valid action
         if states.has(Vector2i(tile_data[idx], t)):
+            # update
             var new_s: int = states[Vector2i(tile_data[idx], t)]
             tile_data[idx] = new_s
+            # start timer if needed
             if timer_states.has(new_s):
                 current_timers[Vector2i(x,y)] = Vector2i(new_s, timer_states[new_s].y* TIMEOUT)
+
             cell_update.emit(x,y,tile_data[idx])
 
 ## check for cell timeouts for any cells registered with a timeout.
 func _handle_time() -> void:
     for cell in current_timers.keys():
-        if current_timers[cell].y == 0:
+        if current_timers[cell].y == 0: # timed out
             var idx: int = cell.x + cell.y * cols
+            # state has not changed since timer start
             if current_timers[cell].x == tile_data[idx]:
+                # update state and signal update
                 tile_data[idx] = timer_states[tile_data[idx]].x
                 cell_update.emit(cell.x,cell.y,tile_data[idx])
+
+            # remove from timer tracking.
             current_timers.erase(cell)
-        if current_timers.has(cell):
+
+        else: # not timed out so count down
             current_timers[cell] -= Vector2i(0,1)
 
 #setters/getters below
