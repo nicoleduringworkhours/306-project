@@ -33,4 +33,3 @@ Other quick notes from the guide before starting:
 | Enum names   | PascalCase    | enum Element              |
 | Enum members | CONSTANT_CASE | {EARTH, WATER, AIR, FIRE} |
 +--------------+---------------+---------------------------+
-
