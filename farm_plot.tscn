@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bl5ptxwyso3t3"]
 
-[ext_resource type="Texture2D" uid="uid://b5vpi2v1lpof0" path="res://farming_tileset.png" id="1_nyna1"]
+[ext_resource type="Texture2D" uid="uid://cwksi50dfl3ed" path="res://farming_tileset.png" id="1_nyna1"]
 [ext_resource type="Script" uid="uid://mwuo3ade5njl" path="res://farm_plot.gd" id="2_0vrth"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0vrth"]
@@ -14,6 +14,6 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_0vrth")
 
-[node name="TileMapLayer" type="TileMapLayer"]
+[node name="farmplot" type="TileMapLayer"]
 tile_set = SubResource("TileSet_7x3mo")
 script = ExtResource("2_0vrth")
