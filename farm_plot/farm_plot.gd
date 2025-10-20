@@ -19,13 +19,18 @@ const timer_states: Dictionary = {
         WET_DIRT: Vector2i(DIRT, 5)
     }
 
+## time update state transitions (state, action): (time to add, max time)
+const time_update: Dictionary = {
+        Vector2i(WET_DIRT, actions.WATER): Vector2i(5,30)
+    }
+
 ## tile manager model
 var tm: TM_Manager
 
 ## set-up. Creates a TM_Manager model, does initial renders of all tiles
 ## actions on tiles
 func _ready() -> void:
-    tm = TM_Manager.new(cols, rows, GRASS, state_machine, timer_states)
+    tm = TM_Manager.new(cols, rows, GRASS, state_machine, timer_states, time_update)
     tm.cell_update.connect(_cell_update)
     for i in range(rows):
         for j in range(cols):

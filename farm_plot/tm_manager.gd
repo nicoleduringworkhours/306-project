@@ -30,6 +30,10 @@ var timer_states: Dictionary
 ## entries of the form (x: int, y: int): (start_state: int, time_remaining: int)
 var current_timers: Dictionary
 
+## the states which handle timer update transitions
+## entries of the form (state: int, action: int): (time_to_add: int, max_time: int)
+var time_update: Dictionary
+
 ## initialize the tile manager
 ## [param x] the number of columns for the tile map
 ## [param y] the number of rows for the tile map
@@ -39,13 +43,14 @@ var current_timers: Dictionary
 ##      by action, default is no transitions. can be set later.
 ## [param timer_state_machine] optional parameter for how states
 ##      transition on timeout, default is no transitions, can be set later
-func _init(x: int, y: int, init_state: int = 0, state_machine: Dictionary = {}, timer_state_machine = {}) -> void:
+func _init(x: int, y: int, init_state: int = 0, state_machine: Dictionary = {}, timer_state_machine = {}, timer_update = {}) -> void:
     cols = x
     rows = y
     for a in range(cols * rows):
         tile_data.append(init_state)
     states = state_machine.duplicate()
     timer_states = timer_state_machine.duplicate()
+    time_update = timer_update.duplicate()
 
     timer = Timer.new()
     timer.one_shot = false
@@ -61,17 +66,23 @@ func apply_transition(x: int, y: int, t: int):
     # valid cell
     if x >= 0 and y >= 0 and x < cols and y < rows:
         var idx = x + y*cols
+        var state_key = Vector2i(tile_data[idx], t)
+        var pos = Vector2i(x,y)
 
         # valid action
-        if states.has(Vector2i(tile_data[idx], t)):
+        if states.has(state_key):
             # update
-            var new_s: int = states[Vector2i(tile_data[idx], t)]
+            var new_s: int = states[state_key]
             tile_data[idx] = new_s
             # start timer if needed
             if timer_states.has(new_s):
-                current_timers[Vector2i(x,y)] = Vector2i(new_s, timer_states[new_s].y* TIMEOUT)
+                current_timers[pos] = Vector2i(new_s, timer_states[new_s].y* TIMEOUT)
 
             cell_update.emit(x,y,tile_data[idx])
+
+        # valid time update
+        elif time_update.has(state_key) and current_timers.has(pos):
+            current_timers[pos].y = clamp(current_timers[pos].y + time_update[state_key].x*TIMEOUT, 0, time_update[state_key].y*TIMEOUT)
 
 ## check for cell timeouts for any cells registered with a timeout.
 func _handle_time() -> void:
