@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bl5ptxwyso3t3"]
 
-[ext_resource type="Texture2D" uid="uid://cwksi50dfl3ed" path="res://farm_plot/farming_tileset.png" id="1_nyna1"]
-[ext_resource type="Script" uid="uid://mwuo3ade5njl" path="res://farm_plot/farm_plot.gd" id="2_0vrth"]
+[ext_resource type="Texture2D" uid="uid://c2852j18a35xd" path="res://FarmPlot/farming_tileset.png" id="1_nyna1"]
+[ext_resource type="Script" uid="uid://o6s3ukjc2b7l" path="res://FarmPlot/farm_plot.gd" id="2_0vrth"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0vrth"]
 texture = ExtResource("1_nyna1")
