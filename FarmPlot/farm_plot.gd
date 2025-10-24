@@ -37,6 +37,10 @@ func _ready() -> void:
             set_cell(Vector2i(j,i), 0, Vector2i(tm.get_tile(j,i), 0))
     add_child(tm.get_timer())
 
+func get_cell_status(x: int, y: int) -> int:
+    var t = local_to_map(Vector2(x,y))
+    return tm.get_tile(t.x, t.y)
+
 # View
 
 ## signal handler to deal with visual updates.
