@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0qraxo3c3v01"]
+[gd_scene load_steps=4 format=3 uid="uid://b0qraxo3c3v01"]
 
 [ext_resource type="Texture2D" uid="uid://frbnnln22u3n" path="res://SeedBag/seed_bag_background.png" id="1_41hfe"]
+[ext_resource type="Script" uid="uid://bl7b47eg4u2k8" path="res://SeedBag/seed_bag.gd" id="1_wp4uc"]
 [ext_resource type="PackedScene" uid="uid://cl2h68hhvo662" path="res://SeedBag/grid_square.tscn" id="2_wp4uc"]
 
 [node name="SeedBag" type="Control"]
@@ -10,6 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_wp4uc")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
@@ -43,28 +45,37 @@ layout_mode = 2
 columns = 3
 
 [node name="GridSquare" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="GridSquare2" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="GridSquare3" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="GridSquare4" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="GridSquare5" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="GridSquare6" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="GridSquare7" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="GridSquare8" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
+unique_name_in_owner = true
 layout_mode = 2
 
 [node name="GridSquare9" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
+unique_name_in_owner = true
 layout_mode = 2

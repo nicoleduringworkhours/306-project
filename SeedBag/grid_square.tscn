@@ -1,4 +1,11 @@
-[gd_scene format=3 uid="uid://cl2h68hhvo662"]
+[gd_scene load_steps=2 format=3 uid="uid://cl2h68hhvo662"]
 
-[node name="GridSquare" type="Panel"]
+[ext_resource type="Script" uid="uid://crg4fb41i4hqx" path="res://SeedBag/grid_square.gd" id="1_pkvww"]
+
+[node name="GridSquare" type="Button"]
 custom_minimum_size = Vector2(64, 64)
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("1_pkvww")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
