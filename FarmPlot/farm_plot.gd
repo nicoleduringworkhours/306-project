@@ -53,6 +53,7 @@ func _cell_update(x: int, y: int, state) -> void:
 func _input(event) -> void:
     # temporary input handling for testing.
     if event.is_action_pressed("click"):
+        Sound.play_sfx(Sound.EFFECT.INTERACT)
         var a = local_to_map(event.get_position())
         tm.apply_transition(a.x,a.y,actions.TILL)
 
