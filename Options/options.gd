@@ -11,6 +11,9 @@ signal close_options()
 @onready var sfx_slider = $CenterContainer/VBoxContainer/GridContainer/sfx_slider
 
 func _ready() -> void:
+    load_opts()
+
+func load_opts() -> void:
     var v: float = Sound.get_vol(Sound.BUS.MASTER)
     mas_lab.text = str(int(v* 100)) + "%"
     mas_slider.value = v

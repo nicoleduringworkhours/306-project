@@ -25,6 +25,7 @@ func _on_resume_pressed() -> void:
     _pause()
 
 func _on_options_pressed() -> void:
+    opts.load_opts()
     menu.set_visible(false)
     opts.set_visible(true)
 
