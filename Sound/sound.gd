@@ -1,4 +1,3 @@
-class_name sound
 extends Node
 
 var master_vol: float = 1
