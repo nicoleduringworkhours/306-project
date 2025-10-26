@@ -24,7 +24,11 @@ func _ready() -> void:
     music = AudioStreamPlayer.new()
     music.set_autoplay(true)
     music.set_bus("Music")
+    # hack since bgm.wav cannot be set to repeat (for some reason?)
     music.finished.connect(_repeat)
+
+    # music happens always
+    music.process_mode = Node.PROCESS_MODE_ALWAYS
 
     var music_load = load("res://Sound/bgm.wav")
     music.set_stream(music_load)
@@ -34,6 +38,7 @@ func _ready() -> void:
     # SFX bus set up
     sfx = AudioStreamPlayer.new()
     sfx.set_bus("SFX")
+    # polyphonic bus to play many sounds
     sfx.set_stream(AudioStreamPolyphonic.new())
 
     add_child(sfx)
