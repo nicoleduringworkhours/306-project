@@ -73,6 +73,17 @@ func play_sfx(effect: EFFECT):
         sfx.play()
     sfx.get_stream_playback().play_stream(sfx_lib[effect])
 
+func get_vol(bus: BUS) -> float:
+    var v: float = 0
+    match bus:
+        BUS.MASTER:
+            v = master_vol
+        BUS.MUSIC:
+            v = music_vol
+        BUS.SFX:
+            v = sfx_vol
+    return v
+
 # TODO: temp
 func _input(event):
     if event.is_action_pressed("click"):
