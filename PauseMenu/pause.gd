@@ -28,10 +28,11 @@ func _on_options_pressed() -> void:
     menu.set_visible(false)
     opts.set_visible(true)
 
-    print("TODO: options")
-
 func _options_closed() -> void:
     menu.set_visible(true)
 
 func _on_quit_pressed() -> void:
     get_tree().quit()
+
+func _on_to_title_pressed() -> void:
+    pass # Replace with function body.
