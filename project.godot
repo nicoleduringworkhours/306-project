@@ -15,6 +15,10 @@ run/main_scene="uid://bl5ptxwyso3t3"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Sound="*res://Sound/sound.gd"
+
 [input]
 
 pause={
