@@ -31,7 +31,9 @@ func _ready() -> void:
     music.process_mode = Node.PROCESS_MODE_ALWAYS
 
     var music_load = load("res://Sound/bgm.wav")
-    music.set_stream(music_load)
+    
+    ##annoying
+    ##music.set_stream(music_load)
 
     add_child(music)
 
@@ -88,4 +90,3 @@ func get_vol(bus: BUS) -> float:
         BUS.SFX:
             v = sfx_vol
     return v
-
