@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=3 uid="uid://deunk8vyc4fs6"]
+
+[ext_resource type="Script" uid="uid://co5l0ajx3i643" path="res://Tool Menu/tool_menu.gd" id="1_ru0av"]
+[ext_resource type="Texture2D" uid="uid://doog332sn3p11" path="res://Icons/tool_shovel.png" id="2_tu7xo"]
+[ext_resource type="Texture2D" uid="uid://doldxjnl1s0od" path="res://Icons/tool_watering_can.png" id="3_oscv6"]
+[ext_resource type="Texture2D" uid="uid://bjlg1dd5320t2" path="res://Icons/tool_hoe.png" id="4_5t0lk"]
+
+[node name="ToolMenu" type="CanvasLayer"]
+
+[node name="Tool container" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+script = ExtResource("1_ru0av")
+
+[node name="Toolbox container" type="HBoxContainer" parent="Tool container"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+alignment = 1
+
+[node name="ToolShovel" type="TextureButton" parent="Tool container/Toolbox container"]
+layout_mode = 2
+size_flags_horizontal = 3
+texture_normal = ExtResource("2_tu7xo")
+stretch_mode = 3
+
+[node name="ToolWateringCan" type="TextureButton" parent="Tool container/Toolbox container"]
+layout_mode = 2
+texture_normal = ExtResource("3_oscv6")
+stretch_mode = 3
+
+[node name="ToolHoe" type="TextureButton" parent="Tool container/Toolbox container"]
+layout_mode = 2
+texture_normal = ExtResource("4_5t0lk")
+stretch_mode = 3
+
+[connection signal="pressed" from="Tool container/Toolbox container/ToolShovel" to="Tool container" method="_on_tool_shovel_pressed"]
+[connection signal="pressed" from="Tool container/Toolbox container/ToolWateringCan" to="Tool container" method="_on_tool_watering_can_pressed"]
+[connection signal="pressed" from="Tool container/Toolbox container/ToolHoe" to="Tool container" method="_on_tool_hoe_pressed"]
