@@ -1,12 +1,10 @@
 extends Control
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-    var i: Item = Item.new()
-    var img: Texture2D = load("res://icon.svg")
-    i.set_texture(img)
-    %GridSquare.set_item(i)
+    %GridSquare.set_crop(GameManager.SC_CORN)
+    %GridSquare2.set_crop(GameManager.SC_POTATO)
+    %GridSquare3.set_crop(GameManager.SC_WHEAT)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-    pass
+
