@@ -4,11 +4,6 @@ extends Control
 var options_instance = null #keeps track of whether an options menu instance has been created
 
 func _ready():
-    #connect button signals
-    $VBoxContainer/OptionsButton.pressed.connect(_on_options_button_pressed)
-    $VBoxContainer/StartButton.pressed.connect(_on_start_button_pressed)
-    $VBoxContainer/QuitButton.pressed.connect(_on_quit_button_pressed)
-    
     #initial focus
     $VBoxContainer/StartButton.grab_focus()
 
