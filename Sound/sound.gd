@@ -32,8 +32,7 @@ func _ready() -> void:
 
     var music_load = load("res://Sound/bgm.wav")
     
-    ##annoying
-    ##music.set_stream(music_load)
+    music.set_stream(music_load)
 
     add_child(music)
 
