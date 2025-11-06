@@ -45,7 +45,6 @@ func _ready() -> void:
     
     growth = Growth.new(self.tile_set, tm);
     add_child(growth);
-    
 
 func get_cell_status(x: int, y: int) -> int:
     var t = local_to_map(Vector2(x,y))
@@ -60,13 +59,15 @@ func _cell_update(x: int, y: int, state: TileState) -> void:
 # Controller
 
 ## Temporary input handling.
-func _input(event) -> void:
-    # temporary input handling for testing.
-    if event.is_action_pressed("click"):
+func hoe_press(loc: Vector2):
+    var a = local_to_map(to_local(loc))
+    if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
         Sound.play_sfx(Sound.EFFECT.INTERACT)
-        var a = local_to_map(event.get_position())
         tm.apply_ground_transition(a.x,a.y,actions.TILL)
 
-    if event.is_action_pressed("hotkey_1"):
-        var a = local_to_map(get_viewport().get_mouse_position())
+func water_press(loc: Vector2):
+    var a = local_to_map(to_local(loc))
+    if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
+        Sound.play_sfx(Sound.EFFECT.INTERACT)
         tm.apply_ground_transition(a.x,a.y,actions.WATER)
+
