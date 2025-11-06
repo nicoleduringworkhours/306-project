@@ -24,9 +24,9 @@ func _on_options_button_pressed() -> void:
         #connect to the close signal and calls _on_options_closed() when it emits signal
         options_instance.close_options.connect(_on_options_closed)
         
-        #hide main and show options
-        hide_main_menu()
-        options_instance.show()
+    #hide main and show options
+    hide_main_menu()
+    options_instance.show()
     
 func _on_options_closed():
     #show main menu buttons again
