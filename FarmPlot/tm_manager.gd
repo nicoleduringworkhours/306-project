@@ -95,12 +95,33 @@ func plant_seed(x: int, y: int, s: int, g = 0.0):
     if x >= 0 and y >= 0 and x < cols and y < rows:
         var idx = x + y*cols
         ##Can't plant seeds in grass
-        if  tile_data[idx].ground == TileState.GroundType.GRASS:
+        ##Can't plant seeds if tile already has seed also
+        if  tile_data[idx].ground == TileState.GroundType.GRASS \
+        or tile_data[idx].seed_type != -1:
             return
         ##Change tile stats and continue
         tile_data[idx].seed_type = s
         tile_data[idx].growth = g
         cell_update.emit(x,y, tile_data[idx])
+
+## Apply an action to a cell
+## [param x] x coordinate of the cell
+## [param y] y coordinate of the cell
+func try_harvest(x: int, y: int) -> bool:
+    # valid cell
+    if x >= 0 and y >= 0 and x < cols and y < rows:
+        var idx = x + y*cols
+        ##Can't plant seeds in grass
+        if tile_data[idx].growth < 0.99:
+            return false
+        ##Change tile stats and continue
+        tile_data[idx].seed_type = -1
+        tile_data[idx].growth = 0.0
+        ##var amogus = get_node("farmplot")
+        ##amogus.add_money(5)
+        cell_update.emit(x,y, tile_data[idx])
+        return true
+    return false
 
 ## check for cell timeouts for any cells registered with a timeout.
 func _handle_time() -> void:

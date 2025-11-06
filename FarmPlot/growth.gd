@@ -35,7 +35,7 @@ func tilestate_to_tilemap_pos(state: TileState) -> Vector2i:
     ##for growth. 
     var row = state.seed_type % 10;
     var col = 5 + ((state.seed_type / 10) * 6);
-    col -= (state.growth * 6);
+    col -= (state.growth * 5.98);
     return Vector2i(col, row);
 
 # View
@@ -52,6 +52,7 @@ func _cell_update(x: int, y: int, state: TileState) -> void:
 func shovel_press(loc: Vector2, seed: GameManager.sc):
     var a = local_to_map(to_local(loc))
     Sound.play_sfx(Sound.EFFECT.INTERACT)
+
     var seedID: int = -1
     match seed:
         GameManager.sc.CORN:

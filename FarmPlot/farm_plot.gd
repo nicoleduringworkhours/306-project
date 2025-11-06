@@ -63,6 +63,10 @@ func hoe_press(loc: Vector2):
     var a = local_to_map(to_local(loc))
     if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
         Sound.play_sfx(Sound.EFFECT.INTERACT)
+        
+        ##If a plant can be harvested, then do it
+        tm.try_harvest(a.x, a.y)
+        
         tm.apply_ground_transition(a.x,a.y,actions.TILL)
 
 func water_press(loc: Vector2):
@@ -70,4 +74,3 @@ func water_press(loc: Vector2):
     if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
         Sound.play_sfx(Sound.EFFECT.INTERACT)
         tm.apply_ground_transition(a.x,a.y,actions.WATER)
-
