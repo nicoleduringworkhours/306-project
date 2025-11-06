@@ -96,3 +96,6 @@ func set_tool_name(tool_name: String):
     if tool_name in tools:
         var button = tool_buttons[tool_name]
         _on_tool_pressed(tool_name, button)
+
+func get_selected_tool() -> String:
+    return tools[current_tool_index]
