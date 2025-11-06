@@ -1,0 +1,87 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2wygt7dj35rl"]
+
+[ext_resource type="Script" uid="uid://cyo6jupmucyqq" path="res://Options/options.gd" id="1_6k1gw"]
+
+[node name="Options" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6k1gw")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+columns = 3
+
+[node name="mas_vol" type="Label" parent="CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Master Volume:"
+
+[node name="mas_slider" type="HSlider" parent="CenterContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="mas_per" type="Label" parent="CenterContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 2
+
+[node name="mus_vol" type="Label" parent="CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "Music Volume:"
+
+[node name="mus_slider" type="HSlider" parent="CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="mus_per" type="Label" parent="CenterContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 2
+
+[node name="sfx_vol" type="Label" parent="CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+text = "SFX Volume:"
+
+[node name="sfx_slider" type="HSlider" parent="CenterContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="sfx_per" type="Label" parent="CenterContainer/VBoxContainer/GridContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+text = "100%"
+horizontal_alignment = 2
+
+[node name="Return" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Return"
+
+[connection signal="value_changed" from="CenterContainer/VBoxContainer/GridContainer/mas_slider" to="." method="_on_mas_slider_value_changed"]
+[connection signal="value_changed" from="CenterContainer/VBoxContainer/GridContainer/mus_slider" to="." method="_on_mus_slider_value_changed"]
+[connection signal="value_changed" from="CenterContainer/VBoxContainer/GridContainer/sfx_slider" to="." method="_on_sfx_slider_value_changed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Return" to="." method="_on_return_pressed"]
