@@ -3,8 +3,8 @@ extends TileMapLayer
 
 # Model
 
-const rows: int = 20 ## rows in the tile map
-const cols: int = 10 ## columns in the tilemap
+const rows: int = 12 ## rows in the tile map
+const cols: int = 15 ## columns in the tilemap
 
 enum actions {TILL, WATER} ## actions on tiles
 
