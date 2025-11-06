@@ -15,6 +15,7 @@ var states: Dictionary
 
 ## signals when a cell updates, transmits which cell changed, and what to
 signal cell_update(x: int, y: int, state: TileState)
+signal get_money(x: int)
 
 ## timer for timeout states. must be added to scene tree with
 ## get_timer if it will be used
@@ -119,6 +120,7 @@ func try_harvest(x: int, y: int) -> bool:
         tile_data[idx].growth = 0.0
         ##var amogus = get_node("farmplot")
         ##amogus.add_money(5)
+        get_money.emit(5)
         cell_update.emit(x,y, tile_data[idx])
         return true
     return false
