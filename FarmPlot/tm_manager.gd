@@ -3,7 +3,6 @@ extends RefCounted
 
 const TIMEOUT: int = 10 ## times/sec to check for timeout.
 
-
 var cols: int ## number of columns (x-dimension)
 var rows: int ## number of rows (y-dimension)
 
@@ -68,7 +67,7 @@ func apply_ground_transition(x: int, y: int, t: int):
         var idx = x + y*cols
         var state_key = Vector2i(tile_data[idx].ground, t)
         var pos = Vector2i(x,y)
-        
+
         #tile_data[idx].ground = TileState.GroundType.DIRT;
         #cell_update.emit(x,y,tile_data[idx])
         # valid action
@@ -89,7 +88,7 @@ func apply_ground_transition(x: int, y: int, t: int):
 ## Apply an action to a cell
 ## [param x] x coordinate of the cell
 ## [param y] y coordinate of the cell
-## [param s] seed id 
+## [param s] seed id
 ## [param g] starting growth (presumably, always 0.0)
 func plant_seed(x: int, y: int, s: int, g = 0.0):
     # valid cell
@@ -106,13 +105,13 @@ func plant_seed(x: int, y: int, s: int, g = 0.0):
 ## check for cell timeouts for any cells registered with a timeout.
 func _handle_time() -> void:
     for cell in current_timers.keys():
-        
+
         ##Handle increasing growth (this could be optimized later?)
         var idxt: int = cell.x + cell.y * cols
         ##This should be correct, no?
-        tile_data[idxt].stimulate_growth(1.0 / TIMEOUT); 
+        tile_data[idxt].stimulate_growth(1.0 / TIMEOUT);
         cell_update.emit(cell.x,cell.y,tile_data[idxt]);
-        
+
         if current_timers[cell].y == 0: # timed out
             var idx: int = cell.x + cell.y * cols
             # state has not changed since timer start

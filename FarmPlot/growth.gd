@@ -12,10 +12,10 @@ var tm: TM_Manager
 func _init(tset: TileSet, tminput: TM_Manager) -> void:
     tm = tminput
     self.tile_set = tset
-    
+
     #Needs to look twice as big ahhh moment
     #cell
-    
+
     tm.cell_update.connect(_cell_update);
     for i in range(tm.get_rows()):
         for j in range(tm.get_cols()):
@@ -25,7 +25,7 @@ func _init(tset: TileSet, tminput: TM_Manager) -> void:
 func get_cell_status(x: int, y: int) -> Array:
     var t = local_to_map(Vector2(x,y));
     return [tm.get_tile(t.x, t.y).seed_type, tm.get_tile(t.x, t.y).growth];
-    
+
 func tilestate_to_tilemap_pos(state: TileState) -> Vector2i:
     if state.seed_type == -1:
         return Vector2i(-1, -1); 
@@ -46,15 +46,29 @@ func _cell_update(x: int, y: int, state: TileState) -> void:
 
 # Controller
 
-var test_seed: int
+#var test_seed: int
 
 ## Temporary input handling.
-func _input(event) -> void:
-    # temporary input handling for testing.
+func shovel_press(loc: Vector2, seed: GameManager.sc):
+    var a = local_to_map(to_local(loc))
+    Sound.play_sfx(Sound.EFFECT.INTERACT)
+    var seedID: int = 0
+    match seed:
+        GameManager.sc.CORN:
+            seed = 19
+        GameManager.sc.POTATO:
+            seed = 15
+        GameManager.sc.WHEAT:
+            seed = 11
 
-    if event.is_action_pressed("hotkey_2"):
-        var a = local_to_map(get_viewport().get_mouse_position())
-        Sound.play_sfx(Sound.EFFECT.INTERACT)
-        tm.plant_seed(a.x,a.y, test_seed, 0.0)
-        test_seed += 1;
-        test_seed %= 20;
+    tm.plant_seed(a.x,a.y, seed, 0.0)
+
+#func _input(event) -> void:
+#    # temporary input handling for testing.
+#
+#    if event.is_action_pressed("hotkey_2"):
+#        var a = local_to_map(get_viewport().get_mouse_position())
+#        Sound.play_sfx(Sound.EFFECT.INTERACT)
+#        tm.plant_seed(a.x,a.y, test_seed, 0.0)
+#        test_seed += 1;
+#        test_seed %= 20;
