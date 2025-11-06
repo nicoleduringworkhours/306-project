@@ -16,6 +16,7 @@ func _ready() -> void:
     water.connect(tm.water_press)
     hoe.connect(tm.hoe_press)
     shovel.connect(tm.growth.shovel_press)
+    shovel.connect(tm.shovel_press)
 
 func _unhandled_input(event) -> void:
     if event.is_action_pressed("click"):
