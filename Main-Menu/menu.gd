@@ -1,6 +1,6 @@
 extends Control
 
-@onready var options_menu = preload("res://Options/options.tscn")
+@onready var Options_Menu = preload("res://Options/options.tscn")
 var options_instance = null #keeps track of whether an options menu instance has been created
 
 func _ready():
@@ -8,7 +8,7 @@ func _ready():
     $VBoxContainer/StartButton.grab_focus()
 
 func _on_start_button_pressed() -> void:
-    get_tree().change_scene_to_file("res://FarmPlot/farm_plot.tscn")
+    get_tree().change_scene_to_file("res://GameScene.tscn")
 
 
 func _on_quit_button_pressed() -> void:
@@ -18,7 +18,7 @@ func _on_quit_button_pressed() -> void:
 func _on_options_button_pressed() -> void:
     if options_instance == null :
         #create menu instance
-        options_instance = options_menu.instantiate() 
+        options_instance = Options_Menu.instantiate() 
         add_child(options_instance)
         
         #connect to the close signal and calls _on_options_closed() when it emits signal
