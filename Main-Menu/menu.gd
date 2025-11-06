@@ -32,6 +32,7 @@ func _on_options_closed():
     #show main menu buttons again
     show_main_menu()
     if options_instance:
+        #hide options menu
         options_instance.hide()
 
 func hide_main_menu():
@@ -41,3 +42,4 @@ func hide_main_menu():
 func show_main_menu():
     #show main menu
     $VBoxContainer.show()
+    
