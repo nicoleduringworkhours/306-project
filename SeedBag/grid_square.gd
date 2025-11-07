@@ -8,6 +8,7 @@ func _ready() -> void:
 signal modulate_button()
 
 func _on_pressed() -> void:
+    Sound.play_sfx(Sound.EFFECT.UI_CLICK)
     GameManager.set_selected_crop(button_crop)
     modulate_button.emit()
     modulate = Color(1, 1, 0, 1)
