@@ -1,5 +1,5 @@
 class_name TM_Manager
-extends Node
+extends RefCounted
 
 const TIMEOUT: int = 10 ## times/sec to check for timeout.
 
