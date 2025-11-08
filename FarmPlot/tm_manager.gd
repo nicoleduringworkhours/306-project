@@ -116,11 +116,11 @@ func try_harvest(x: int, y: int) -> bool:
         if tile_data[idx].growth < 0.99:
             return false
         ##Change tile stats and continue
+        get_money.emit(2* tile_data[idx].seed_type)
         tile_data[idx].seed_type = -1
         tile_data[idx].growth = 0.0
         ##var amogus = get_node("farmplot")
         ##amogus.add_money(5)
-        get_money.emit(5)
         cell_update.emit(x,y, tile_data[idx])
         return true
     return false
