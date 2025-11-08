@@ -1,5 +1,5 @@
 class_name TM_Manager
-extends RefCounted
+extends Node
 
 const TIMEOUT: int = 10 ## times/sec to check for timeout.
 
@@ -100,6 +100,7 @@ func plant_seed(x: int, y: int, s: int, g = 0.0):
         if  tile_data[idx].ground == TileState.GroundType.GRASS \
         or tile_data[idx].seed_type != -1:
             return
+            
         ##Change tile stats and continue
         tile_data[idx].seed_type = s
         tile_data[idx].growth = g
