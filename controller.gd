@@ -18,8 +18,8 @@ func _ready() -> void:
     shovel.connect(tm.growth.shovel_press)
     shovel.connect(tm.shovel_press)
     
-    var hud = $"HUD/hud"
-    tm.growth.get_money.connect(hud.get_money)
+    var hud = $"Hud"
+    tm.tm.get_money.connect(hud.get_money)
 
 func _unhandled_input(event) -> void:
     if event.is_action_pressed("click"):
