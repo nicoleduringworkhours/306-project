@@ -12,3 +12,5 @@ powerup.mp3
 
 chime.mp3
 frozen wind chime ding by ChrisReierson -- https://freesound.org/s/383979/ -- License: Attribution 4.0
+
+Background music used with permission of Tristen MacPherson
