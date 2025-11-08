@@ -1,11 +1,5 @@
 extends Node
 
-func _ready():
-    var tm = get_node("res://FarmPlot/tm_manager")
-    tm.get_money.connect(_get_money)
-    
-    
-func _get_money(amount: int):
-    
-    var money_label = get_node("res://FarmPlot/money")
+func get_money(amount: int):
+    var money_label = $Label
     money_label.add_money(amount)
