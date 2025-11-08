@@ -10,5 +10,5 @@ func add_money(m: int) -> void:
     set_money(money + m)
 
 
-func _init() -> void:
+func _ready() -> void:
     set_money(0)
