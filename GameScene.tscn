@@ -20,3 +20,14 @@ offset_left = 808.0
 offset_top = 159.0
 offset_right = 808.0
 offset_bottom = 159.0
+
+[node name="tip" type="Label" parent="."]
+offset_left = 13.0
+offset_top = 511.0
+offset_right = 349.0
+offset_bottom = 638.0
+text = "Press Escape to pause
+Use the hoe to till dirt
+Use the Shovel to plant crops
+Use the Water can to help crops grow
+Harvest grown crops with the shovel or hoe"

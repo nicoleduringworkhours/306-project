@@ -2,7 +2,7 @@ extends Node
 
 ## selected crop
 enum sc {NONE, CORN, POTATO, WHEAT}
-var selected_crop = sc.NONE
+var selected_crop = sc.CORN
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

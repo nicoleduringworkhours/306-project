@@ -41,4 +41,5 @@ func _on_quit_pressed() -> void:
 
 func _on_to_title_pressed() -> void:
     Sound.play_sfx(Sound.EFFECT.UI_CLICK)
-    pass # Replace with function body.
+    get_tree().paused = false
+    get_tree().change_scene_to_file("res://Main-Menu/Menu.tscn")
