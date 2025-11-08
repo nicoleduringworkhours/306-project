@@ -16,6 +16,13 @@ func _ready() -> void:
     %GridSquare7.modulate_button.connect(_modulate_button)
     %GridSquare8.modulate_button.connect(_modulate_button)
     %GridSquare9.modulate_button.connect(_modulate_button)
+    %GridSquare4.disabled = true
+    %GridSquare5.disabled = true
+    %GridSquare6.disabled = true
+    %GridSquare7.disabled = true
+    %GridSquare8.disabled = true
+    %GridSquare9.disabled = true
+
 
 func _tool_selected(tool_name: String) -> void: 
     if tool_name == "shovel":
