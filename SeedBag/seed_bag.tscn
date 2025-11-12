@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://b0qraxo3c3v01"]
 
-[ext_resource type="Texture2D" uid="uid://frbnnln22u3n" path="res://SeedBag/seed_bag_background.png" id="1_41hfe"]
+[ext_resource type="Texture2D" uid="uid://e5bswr0bhnnw" path="res://Assets/SeedBag/seed_bag_background.png" id="1_41hfe"]
 [ext_resource type="Script" uid="uid://bgkmxa2k54eq2" path="res://SeedBag/seed_bag.gd" id="1_wp4uc"]
 [ext_resource type="PackedScene" uid="uid://cl2h68hhvo662" path="res://SeedBag/grid_square.tscn" id="2_wp4uc"]
-[ext_resource type="Texture2D" uid="uid://cxypdft6chps2" path="res://SeedBag/corn.png" id="4_10rax"]
-[ext_resource type="Texture2D" uid="uid://bhcu3iuicedj1" path="res://SeedBag/potato.png" id="5_0a3hj"]
-[ext_resource type="Texture2D" uid="uid://cq40lgd6ypj32" path="res://SeedBag/wheat.png" id="6_1i2bb"]
+[ext_resource type="Texture2D" uid="uid://6ktg5lemd5iw" path="res://Assets/SeedBag/corn.png" id="4_10rax"]
+[ext_resource type="Texture2D" uid="uid://kcmgukasgtp1" path="res://Assets/SeedBag/potato.png" id="5_0a3hj"]
+[ext_resource type="Texture2D" uid="uid://c0ibekwn3r4ik" path="res://Assets/SeedBag/wheat.png" id="6_1i2bb"]
 
 [node name="SeedBag" type="Control"]
 layout_mode = 3

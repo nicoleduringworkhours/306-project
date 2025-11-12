@@ -12,11 +12,11 @@ enum BUS {MASTER, MUSIC, SFX}
 enum EFFECT {UI_CLICK, MENU, INTERACT, GROW, TOOL_SWAP}
 
 var sfx_lib: Dictionary = {
-        EFFECT.UI_CLICK: preload("res://Sound/click.mp3"),
-        EFFECT.MENU: preload("res://Sound/menu.mp3"),
-        EFFECT.INTERACT: preload("res://Sound/dirt.mp3"),
-        EFFECT.GROW: preload("res://Sound/powerup.mp3"),
-        EFFECT.TOOL_SWAP: preload("res://Sound/chime.mp3"),
+        EFFECT.UI_CLICK: preload("res://Assets/Sounds/click.mp3"),
+        EFFECT.MENU: preload("res://Assets/Sounds/menu.mp3"),
+        EFFECT.INTERACT: preload("res://Assets/Sounds/dirt.mp3"),
+        EFFECT.GROW: preload("res://Assets/Sounds/powerup.mp3"),
+        EFFECT.TOOL_SWAP: preload("res://Assets/Sounds/chime.mp3"),
     }
 
 func _ready() -> void:
@@ -30,7 +30,7 @@ func _ready() -> void:
     # music happens always
     music.process_mode = Node.PROCESS_MODE_ALWAYS
 
-    var music_load = load("res://Sound/bgm.wav")
+    var music_load = load("res://Assets/Sounds/bgm.wav")
     
     music.set_stream(music_load)
 
