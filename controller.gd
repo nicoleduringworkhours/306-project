@@ -8,7 +8,7 @@ signal shovel(earl: Vector2, bert: GameManager.sc)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-    tlm = $"ToolMenu/Tool container"
+    tlm = $ToolMenu
     var sb = $SeedBag
     tlm.tool_selected.connect(sb._tool_selected)
 

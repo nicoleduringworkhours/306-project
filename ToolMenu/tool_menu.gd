@@ -8,9 +8,9 @@ var current_tool_index: int = 0
 var active_tweens: Dictionary = {}  # tracks the tweens per button
 
 @onready var tool_buttons := {
-    "shovel": $"Toolbox container/ToolShovel",
-    "watering_can": $"Toolbox container/ToolWateringCan",
-    "hoe": $"Toolbox container/ToolHoe",
+    "shovel": $"ToolboxContainer/ToolShovel",
+    "watering_can": $"ToolboxContainer/ToolWateringCan",
+    "hoe": $"ToolboxContainer/ToolHoe",
 }
 
 func _ready():
