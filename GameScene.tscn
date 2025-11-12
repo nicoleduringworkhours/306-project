@@ -11,6 +11,7 @@
 script = ExtResource("1_hvuor")
 
 [node name="pause" parent="." instance=ExtResource("2_i2arf")]
+z_index = 4
 
 [node name="farmplot" parent="." instance=ExtResource("3_1kil2")]
 
