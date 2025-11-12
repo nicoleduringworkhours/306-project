@@ -1,15 +1,15 @@
 extends Node2D
 
 var tlm
+@onready var sb: SeedBag = $SeedBag
 
 signal water(earl: Vector2)
 signal hoe(earl: Vector2)
-signal shovel(earl: Vector2, bert: GameManager.sc)
+signal shovel(earl: Vector2, bert: SeedBag.crop)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
     tlm = $ToolMenu
-    var sb = $SeedBag
     tlm.tool_selected.connect(sb._tool_selected)
 
     var tm = $farmplot
@@ -25,7 +25,7 @@ func _unhandled_input(event) -> void:
     if event.is_action_pressed("click"):
         match tlm.get_selected_tool():
             tlm.tools.SHOVEL:
-                shovel.emit(event.position, GameManager.get_selected_crop())
+                shovel.emit(event.position, sb.get_crop())
             tlm.tools.HOE:
                 hoe.emit(event.position)
             tlm.tools.WATERING_CAN:
