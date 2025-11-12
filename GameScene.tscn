@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bl5ptxwyso3t3" path="res://FarmPlot/farm_plot.tscn" id="3_1kil2"]
 [ext_resource type="PackedScene" uid="uid://deunk8vyc4fs6" path="res://ToolMenu/tool_menu.tscn" id="4_5cvvu"]
 [ext_resource type="PackedScene" uid="uid://b0qraxo3c3v01" path="res://SeedBag/seed_bag.tscn" id="5_ed8b8"]
-[ext_resource type="PackedScene" uid="uid://b5ldw3cn7j0e4" path="res://HUD/hud.tscn" id="6_i2arf"]
+[ext_resource type="PackedScene" path="res://HUD/money_hud.tscn" id="6_i2arf"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_hvuor")
@@ -39,4 +39,7 @@ Use the Water can to help crops grow
 Harvest grown crops with the shovel or hoe"
 
 [node name="Hud" parent="." instance=ExtResource("6_i2arf")]
-position = Vector2(1005, 13)
+offset_left = 1005.0
+offset_top = 13.0
+offset_right = 1045.0
+offset_bottom = 36.0

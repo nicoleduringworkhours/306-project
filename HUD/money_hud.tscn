@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5ldw3cn7j0e4"]
+
+[ext_resource type="Script" uid="uid://cen3advkfp4nj" path="res://HUD/money.gd" id="2_yu8mg"]
+
+[node name="Money" type="Label"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "MONEY: 0"
+script = ExtResource("2_yu8mg")
