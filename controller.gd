@@ -18,7 +18,7 @@ func _ready() -> void:
     shovel.connect(tm.growth.shovel_press)
     shovel.connect(tm.shovel_press)
     
-    var hud = $"Hud"
+    var hud = $Hud
     tm.tm.get_money.connect(hud.get_money)
 
 func _unhandled_input(event) -> void:
