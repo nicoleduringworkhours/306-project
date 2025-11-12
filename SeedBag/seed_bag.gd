@@ -1,7 +1,7 @@
 extends Control
 
+var prev_button: BagButton
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
     %GridSquare.set_crop(GameManager.sc.CORN)
     %GridSquare2.set_crop(GameManager.sc.POTATO)
@@ -16,27 +16,14 @@ func _ready() -> void:
     %GridSquare7.modulate_button.connect(_modulate_button)
     %GridSquare8.modulate_button.connect(_modulate_button)
     %GridSquare9.modulate_button.connect(_modulate_button)
-    %GridSquare4.disabled = true
-    %GridSquare5.disabled = true
-    %GridSquare6.disabled = true
-    %GridSquare7.disabled = true
-    %GridSquare8.disabled = true
-    %GridSquare9.disabled = true
 
+    _modulate_button(%GridSquare)
 
-func _tool_selected(tool_name: String) -> void: 
-    if tool_name == "shovel":
-        visible = true
-    else:
-        visible = false
+func _tool_selected(tool_name: String) -> void:
+    visible = tool_name == "shovel"
 
-func _modulate_button() -> void:
-    %GridSquare.modulate = Color(1, 1, 1, 1)
-    %GridSquare2.modulate = Color(1, 1, 1, 1)
-    %GridSquare3.modulate = Color(1, 1, 1, 1)
-    %GridSquare4.modulate = Color(1, 1, 1, 1)
-    %GridSquare5.modulate = Color(1, 1, 1, 1)
-    %GridSquare6.modulate = Color(1, 1, 1, 1)
-    %GridSquare7.modulate = Color(1, 1, 1, 1)
-    %GridSquare8.modulate = Color(1, 1, 1, 1)
-    %GridSquare9.modulate = Color(1, 1, 1, 1)
+func _modulate_button(button: BagButton) -> void:
+    if prev_button:
+        prev_button.modulate = Color(1,1,1,1)
+    button.modulate = Color(1,1,0,1)
+    prev_button = button
