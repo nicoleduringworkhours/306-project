@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dq1e1rn8eqek6"]
 
-[ext_resource type="Script" uid="uid://c7blrgydagcu8" path="res://Tool Menu/main.gd" id="1_h2yge"]
-[ext_resource type="PackedScene" uid="uid://bl5ptxwyso3t3" path="res://farm_plot.tscn" id="2_1bvp3"]
+[ext_resource type="Script" uid="uid://bb5wsjie53o3h" path="res://Tool Menu/main.gd" id="1_h2yge"]
+[ext_resource type="PackedScene" uid="uid://bl5ptxwyso3t3" path="res://FarmPlot/farm_plot.tscn" id="2_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://deunk8vyc4fs6" path="res://Tool Menu/tool_menu.tscn" id="3_lquwl"]
 
 [node name="Main" type="Node2D"]

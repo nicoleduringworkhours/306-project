@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cl2h68hhvo662"]
 
-[ext_resource type="Script" uid="uid://crg4fb41i4hqx" path="res://SeedBag/grid_square.gd" id="1_pkvww"]
+[ext_resource type="Script" uid="uid://c5krwntvqvfgi" path="res://SeedBag/grid_square.gd" id="1_pkvww"]
 
 [node name="GridSquare" type="Button"]
 custom_minimum_size = Vector2(64, 64)

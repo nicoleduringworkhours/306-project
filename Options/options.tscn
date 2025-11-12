@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c2wygt7dj35rl"]
 
-[ext_resource type="Script" uid="uid://cyo6jupmucyqq" path="res://Options/options.gd" id="1_6k1gw"]
+[ext_resource type="Script" uid="uid://bwsqbbso0d3xf" path="res://Options/options.gd" id="1_6k1gw"]
 
 [node name="Options" type="Control"]
 process_mode = 3
