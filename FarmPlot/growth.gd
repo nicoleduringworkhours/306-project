@@ -49,20 +49,20 @@ func _cell_update(x: int, y: int, state: TileState) -> void:
 #var test_seed: int
 
 ## Temporary input handling.
-func shovel_press(loc: Vector2, seed: GameManager.sc):
+func shovel_press(loc: Vector2, seed_selected: GameManager.sc):
     var a = local_to_map(to_local(loc))
     Sound.play_sfx(Sound.EFFECT.INTERACT)
 
-    var seedID: int = -1
-    match seed:
+    var to_plant = 9
+    match seed_selected:
         GameManager.sc.CORN:
-            seed = 9
+            to_plant = 9
         GameManager.sc.POTATO:
-            seed = 7
+            to_plant = 7
         GameManager.sc.WHEAT:
-            seed = 5
+            to_plant = 5
 
-    tm.plant_seed(a.x,a.y, seed, 0.0)
+    tm.plant_seed(a.x,a.y, to_plant, 0.0)
 
 #func _input(event) -> void:
 #    # temporary input handling for testing.

@@ -75,7 +75,7 @@ func water_press(loc: Vector2):
         Sound.play_sfx(Sound.EFFECT.INTERACT)
         tm.apply_ground_transition(a.x,a.y,actions.WATER)
 
-func shovel_press(loc: Vector2, seed: GameManager.sc) -> void:
+func shovel_press(loc: Vector2, _seed: GameManager.sc) -> void:
     var a = local_to_map(to_local(loc))
     tm.try_harvest(a.x,a.y)
 
