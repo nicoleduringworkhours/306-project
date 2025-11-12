@@ -39,4 +39,4 @@ func _on_sfx_slider_value_changed(value: float) -> void:
 func _on_return_pressed() -> void:
     Sound.play_sfx(Sound.EFFECT.MENU)
     close_options.emit()
-    self.set_visible(false)
+    set_visible(false)

@@ -1,5 +1,5 @@
 extends TileMapLayer
-
+class_name FarmPlot
 
 # Model
 

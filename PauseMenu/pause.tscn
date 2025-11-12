@@ -1,17 +1,23 @@
-[gd_scene load_steps=3 format=3 uid="uid://bohhsjqh0x5bo"]
+[gd_scene load_steps=4 format=3 uid="uid://bohhsjqh0x5bo"]
 
 [ext_resource type="Script" uid="uid://2ws3pdb58awq" path="res://PauseMenu/pause.gd" id="1_45vjg"]
+[ext_resource type="PackedScene" uid="uid://c2wygt7dj35rl" path="res://Options/options.tscn" id="2_kxjjc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_45vjg"]
 font_size = 70
 
-[node name="pause" type="Node2D"]
+[node name="pause" type="Control"]
 process_mode = 3
-top_level = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 script = ExtResource("1_45vjg")
 
 [node name="Menu" type="CenterContainer" parent="."]
 process_mode = 2
+visible = false
+layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 size_flags_horizontal = 3
@@ -46,7 +52,12 @@ text = "Return to Title
 layout_mode = 2
 text = "Quit"
 
-[connection signal="pressed" from="Menu/Buttons/Resume" to="." method="_on_resume_pressed"]
+[node name="Options" parent="." instance=ExtResource("2_kxjjc")]
+process_mode = 2
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="Menu/Buttons/Resume" to="." method="_pause"]
 [connection signal="pressed" from="Menu/Buttons/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="Menu/Buttons/toTitle" to="." method="_on_to_title_pressed"]
 [connection signal="pressed" from="Menu/Buttons/Quit" to="." method="_on_quit_pressed"]

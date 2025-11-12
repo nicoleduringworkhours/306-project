@@ -5,9 +5,9 @@ extends Node
 
 var current_tool: String = "shovel"
 var cursor_icons := {
-    "hoe": preload("res://Icons/tool_hoe.png"),
-    "watering_can": preload("res://Icons/tool_watering_can.png"),
-    "shovel": preload("res://Icons/tool_shovel.png"),
+    "hoe": preload("res://Assets/Icons/tool_hoe.png"),
+    "watering_can": preload("res://Assets/Icons/tool_watering_can.png"),
+    "shovel": preload("res://Assets/Icons/tool_shovel.png"),
 }
 
 func _ready():
