@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dbw5bq7rhf058"]
 
-[ext_resource type="Script" uid="uid://bk62con5yw3ax" path="res://Main-Menu/menu.gd" id="1_h4nae"]
+[ext_resource type="Script" uid="uid://yomi4avh4m24" path="res://MainMenu/menu.gd" id="1_nuv2b"]
 
 [sub_resource type="Theme" id="Theme_h4nae"]
 default_font_size = 40
@@ -9,7 +9,7 @@ default_font_size = 40
 layout_mode = 3
 anchors_preset = 0
 size_flags_vertical = 4
-script = ExtResource("1_h4nae")
+script = ExtResource("1_nuv2b")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
