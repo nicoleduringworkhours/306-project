@@ -1,22 +1,19 @@
 [gd_scene load_steps=5 format=3 uid="uid://deunk8vyc4fs6"]
 
 [ext_resource type="Script" uid="uid://dh3ymqeowo5bs" path="res://ToolMenu/tool_menu.gd" id="1_ru0av"]
-[ext_resource type="Texture2D" uid="uid://doog332sn3p11" path="res://Icons/tool_shovel.png" id="2_tu7xo"]
-[ext_resource type="Texture2D" uid="uid://doldxjnl1s0od" path="res://Icons/tool_watering_can.png" id="3_oscv6"]
-[ext_resource type="Texture2D" uid="uid://bjlg1dd5320t2" path="res://Icons/tool_hoe.png" id="4_5t0lk"]
+[ext_resource type="Texture2D" uid="uid://doog332sn3p11" path="res://Assets/Icons/tool_shovel.png" id="2_tu7xo"]
+[ext_resource type="Texture2D" uid="uid://doldxjnl1s0od" path="res://Assets/Icons/tool_watering_can.png" id="3_oscv6"]
+[ext_resource type="Texture2D" uid="uid://bjlg1dd5320t2" path="res://Assets/Icons/tool_hoe.png" id="4_5t0lk"]
 
 [node name="ToolMenu" type="Control"]
-custom_minimum_size = Vector2(0, 100)
 layout_mode = 3
 anchors_preset = 0
-offset_bottom = 100.0
-size_flags_vertical = 8
 script = ExtResource("1_ru0av")
 
 [node name="ToolboxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 104.0
+offset_bottom = 32.0
 alignment = 1
 
 [node name="ToolShovel" type="TextureButton" parent="ToolboxContainer"]

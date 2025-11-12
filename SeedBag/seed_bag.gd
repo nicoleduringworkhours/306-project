@@ -19,8 +19,8 @@ func _ready() -> void:
 
     _modulate_button(%GridSquare)
 
-func _tool_selected(tool_name: String) -> void:
-    visible = tool_name == "shovel"
+func _tool_selected(t: int) -> void:
+    visible = t == 0
 
 func _modulate_button(button: BagButton) -> void:
     if prev_button:

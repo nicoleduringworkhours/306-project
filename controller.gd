@@ -24,9 +24,9 @@ func _ready() -> void:
 func _unhandled_input(event) -> void:
     if event.is_action_pressed("click"):
         match tlm.get_selected_tool():
-            "shovel":
+            tlm.tools.SHOVEL:
                 shovel.emit(event.position, GameManager.get_selected_crop())
-            "hoe":
+            tlm.tools.HOE:
                 hoe.emit(event.position)
-            "watering_can":
+            tlm.tools.WATERING_CAN:
                 water.emit(event.position)
