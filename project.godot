@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 Sound="*res://Sound/sound.gd"
-Crops="*res://crops.gd"
 
 [debug]
 

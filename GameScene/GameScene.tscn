@@ -1,14 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://duhjja3m5cidj"]
+[gd_scene load_steps=7 format=3 uid="uid://cmipdq27d68s"]
 
-[ext_resource type="Script" uid="uid://b87snww3t5pvt" path="res://GameScene/controller.gd" id="1_i2arf"]
+[ext_resource type="Script" uid="uid://b87snww3t5pvt" path="res://controller.gd" id="1_hvuor"]
 [ext_resource type="PackedScene" uid="uid://bohhsjqh0x5bo" path="res://PauseMenu/pause.tscn" id="2_i2arf"]
 [ext_resource type="PackedScene" uid="uid://bl5ptxwyso3t3" path="res://FarmPlot/farm_plot.tscn" id="3_1kil2"]
 [ext_resource type="PackedScene" uid="uid://deunk8vyc4fs6" path="res://ToolMenu/tool_menu.tscn" id="4_5cvvu"]
 [ext_resource type="PackedScene" uid="uid://b0qraxo3c3v01" path="res://SeedBag/seed_bag.tscn" id="5_ed8b8"]
-[ext_resource type="PackedScene" uid="uid://b5ldw3cn7j0e4" path="res://HUD/money_hud.tscn" id="6_i2arf"]
+[ext_resource type="PackedScene" path="res://HUD/money_hud.tscn" id="6_i2arf"]
 
 [node name="Node2D" type="Node2D"]
-script = ExtResource("1_i2arf")
+script = ExtResource("1_hvuor")
 
 [node name="pause" parent="." instance=ExtResource("2_i2arf")]
 z_index = 4
