@@ -3,7 +3,7 @@ class_name SeedBag
 
 var prev_button: BagButton
 
-enum crop {NONE, CORN, WHEAT, POTATO}
+enum crop {NONE=0, CORN=9, WHEAT=5, POTATO=7}
 var current_crop: crop = crop.CORN
 
 func _ready() -> void:
