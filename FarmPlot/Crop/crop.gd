@@ -28,8 +28,8 @@ func data(r: int, c: int, p: PlotMap) -> CropMap:
 ## set-up. Creates a TM_Manager model, does initial renders of all tiles
 ## actions on tiles
 func _ready() -> void:
-    for c in SeedBag.crop.values():
-        if c != SeedBag.crop.NONE:
+    for c in Crop.crop.values():
+        if c != Crop.crop.NONE:
             for i in range(STAGES - 1):
                 var v = (STAGES-i)*10+c
                 # initiate growth
@@ -40,12 +40,12 @@ func _ready() -> void:
                 state_machine[Vector2i(-100*v+1, actions.FAIL)] = v
 
             # harvest crop
-            state_machine[Vector2i(10+c, actions.HARVEST)] = SeedBag.crop.NONE
+            state_machine[Vector2i(10+c, actions.HARVEST)] = Crop.crop.NONE
 
             # plant crop
-            state_machine[Vector2i(SeedBag.crop.NONE, c)] = STAGES*10 + c
+            state_machine[Vector2i(Crop.crop.NONE, c)] = STAGES*10 + c
 
-    ag = AutomataGrid.new(cols, rows, SeedBag.crop.NONE, state_machine, timer_states)
+    ag = AutomataGrid.new(cols, rows, Crop.crop.NONE, state_machine, timer_states)
     ag.cell_update.connect(_cell_update)
 
     add_child(ag.get_timer())
@@ -54,7 +54,7 @@ func _ready() -> void:
 
 ## signal handler to deal with visual updates.
 func _cell_update(x: int, y: int, state: int) -> void:
-    if state == SeedBag.crop.NONE:
+    if state == Crop.crop.NONE:
         set_cell(Vector2i(x,y), 0, Vector2i(-1, 0))
     elif state > 0:
         set_cell(Vector2i(x,y), 0, Vector2i(state / 10, state % 10))
@@ -73,7 +73,7 @@ func hoe_press(loc: Vector2):
     if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
         _try_harvest(a.x,a.y)
 
-func shovel_press(loc: Vector2, _seed: SeedBag.crop) -> void:
+func shovel_press(loc: Vector2, _seed: Crop.crop) -> void:
     var a = local_to_map(loc)
     if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
         if pm.can_plant(a.x,a.y):
@@ -86,7 +86,7 @@ func _try_harvest(x: int, y: int):
     if val != 0:
         val = 2*(val-10)
     ag.transition(x,y, actions.HARVEST)
-    if ag.get_tile(x, y) == SeedBag.crop.NONE: # harvest success
+    if ag.get_tile(x, y) == Crop.crop.NONE: # harvest success
         harvested.emit(val)
 
 func got_watered(x: int, y: int):

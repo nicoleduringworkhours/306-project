@@ -5,7 +5,7 @@ var tlm
 
 signal water(earl: Vector2)
 signal hoe(earl: Vector2)
-signal shovel(earl: Vector2, bert: SeedBag.crop)
+signal shovel(earl: Vector2, bert: Crop.crop)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

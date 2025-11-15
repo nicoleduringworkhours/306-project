@@ -23,7 +23,7 @@ func hoe_press(loc: Vector2):
     _p.hoe_press(to_local(loc))
     _c.hoe_press(to_local(loc))
 
-func shovel_press(loc: Vector2, s: SeedBag.crop):
+func shovel_press(loc: Vector2, s: Crop.crop):
     _c.shovel_press(to_local(loc), s)
 
 func water_press(loc: Vector2):
