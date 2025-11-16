@@ -31,7 +31,7 @@ func _ready() -> void:
     music.process_mode = Node.PROCESS_MODE_ALWAYS
 
     var music_load = load("res://Assets/Sounds/bgm.wav")
-    
+
     music.set_stream(music_load)
 
     add_child(music)
