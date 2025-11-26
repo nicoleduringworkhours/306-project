@@ -67,6 +67,7 @@ func _cell_update(x: int, y: int, state: int) -> void:
 
 # Controller
 signal harvested(val: int)
+signal seed_planted(crop_type : Crop.crop)
 
 func hoe_press(loc: Vector2):
     var a = local_to_map(loc)
@@ -91,3 +92,5 @@ func _try_harvest(x: int, y: int):
 
 func got_watered(x: int, y: int):
     ag.transition(x, y, actions.TRY_GROW)
+
+    

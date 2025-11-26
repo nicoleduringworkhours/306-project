@@ -35,3 +35,5 @@ func _modulate_button(button: BagButton) -> void:
 
 func get_crop() -> Crop.crop:
     return current_crop
+
+    
