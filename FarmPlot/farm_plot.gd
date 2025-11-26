@@ -30,13 +30,19 @@ func shovel_press(loc: Vector2, s: Crop.crop):
 func water_press(loc: Vector2):
     _p.water_press(to_local(loc))
 
+## Emits a signal to get_money to deduct the total amount of money based on the 
+## crop type.
+
+## Parameters:
+## - crop_type: the kind of crop planted
+ 
 func seed_planted(crop_type : Crop.crop):
     match crop_type:
-         Crop.crop.CORN:
-            get_money.emit(-3)
+         Crop.crop.CORN: 
+            get_money.emit(-3) #deduct 3 from total money if corn is planted
          Crop.crop.WHEAT:
-            get_money.emit(-2)
+            get_money.emit(-2) #deduct 2 from total money if wheat is planted
          Crop.crop.POTATO:
-            get_money.emit(-5)
+            get_money.emit(-5) #deduct 5 from total money if potato is planted
         
         
