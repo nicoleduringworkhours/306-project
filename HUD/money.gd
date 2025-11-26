@@ -10,4 +10,3 @@ func set_money(m: int) -> void:
 func add_money(m: int) -> void:
     money += m
     text = text_pref + str(money)
-
