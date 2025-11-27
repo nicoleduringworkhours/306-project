@@ -11,7 +11,7 @@ func set_money(m: int) -> void:
     text = text_pref + str(money)
 
 func add_money(m: int) -> void:
-    if money - m < 0:
+    if money - m <= 0:
         return
     money += m
     text = text_pref + str(money)
