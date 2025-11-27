@@ -1,6 +1,6 @@
 extends Label
 
-var money: int = 0
+var money: int = 50
 const text_pref: String = "MONEY: "
 
 func set_money(m: int) -> void:
