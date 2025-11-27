@@ -86,12 +86,12 @@ func shovel_press(loc: Vector2, _seed: Crop.crop) -> void:
 func _try_harvest(x: int, y: int):
     var val = ag.get_tile(x, y)
     if val != 0:
-        val = 2*(val-10)
-    ag.transition(x,y, actions.HARVEST)
-    if ag.get_tile(x, y) == Crop.crop.NONE: # harvest success
-        harvested.emit(val)
+        val = 2*(val - 10)
+
+        ag.transition(x,y, actions.HARVEST)
+        if ag.get_tile(x, y) == Crop.crop.NONE: # harvest success
+            harvested.emit(val)
 
 func got_watered(x: int, y: int):
     ag.transition(x, y, actions.TRY_GROW)
 
-    
