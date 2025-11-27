@@ -56,12 +56,8 @@ func want_to_plant(crop_type: Crop.crop) -> bool:
 ## - crop_type: the kind of crop planted
  
 func seed_planted(crop_type : Crop.crop):
-    match crop_type:
-         Crop.crop.CORN: 
-            reduce_money.emit(-3) #deduct 3 from total money if corn is planted
-         Crop.crop.WHEAT:
-            reduce_money.emit(-2) #deduct 2 from total money if wheat is planted
-         Crop.crop.POTATO:
-            reduce_money.emit(-5) #deduct 5 from total money if potato is planted
+    if want_to_plant(crop_type) == true:
+        get_money.emit(-cost_of_crop)
+    
         
         
