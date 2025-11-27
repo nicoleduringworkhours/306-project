@@ -17,4 +17,3 @@ func _on_quit_button_pressed() -> void:
 func option_toggle() -> void:
     vb.set_visible(not vb.visible)
     opts.set_visible(not opts.visible)
-

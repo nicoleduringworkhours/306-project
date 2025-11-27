@@ -2,8 +2,8 @@ extends Control
 
 signal tool_selected(t: tools)
 
-enum tools {SHOVEL=0, WATERING_CAN=1, HOE=2}
-const TOOLSIZE = 3
+enum tools {SHOVEL=0, WATERING_CAN=1, HOE=2, FERTILIZER= 3}
+const TOOLSIZE = 4
 var current_tool
 var prev_button: TextureButton
 
@@ -13,6 +13,7 @@ var active_tweens: Dictionary = {}  # tracks the tweens per button
     tools.SHOVEL: $"ToolboxContainer/ToolShovel",
     tools.WATERING_CAN: $"ToolboxContainer/ToolWateringCan",
     tools.HOE: $"ToolboxContainer/ToolHoe",
+    tools.FERTILIZER: $"ToolboxContainer/ToolFertilizer"
 }
 
 func _ready():
@@ -37,16 +38,19 @@ func _on_tool_watering_can_pressed() -> void:
 
 func _on_tool_hoe_pressed() -> void:
     select_tool(tools.HOE)
+    
+func _on_tool_fertilizer_pressed() -> void:
+    select_tool(tools.FERTILIZER)
 
 func highlight_tool(t: tools):
     var button = tool_buttons[t]
 
     if prev_button and prev_button != button:
         animate_tween(prev_button, Vector2.ONE)
-        prev_button.modulate = Color(1, 1, 1)
+        prev_button.modulate = Color(1, 1, 1, 1)
 
     prev_button = button
-    button.modulate = Color(1, 1, 0)
+    button.modulate = Color(1, 1, 0, 1)
     animate_tween(button, Vector2(1.2, 1.2))
 
 # helper to create / replace a tween for each button
@@ -67,6 +71,8 @@ func _unhandled_input(event):
         select_tool(tools.WATERING_CAN)
     elif event.is_action_pressed("hotkey_3"):
         select_tool(tools.HOE)
+    elif event.is_action_pressed("hotkey_4"):
+        select_tool(tools.FERTILIZER)
     elif event.is_action_pressed("scroll_up"):
         switch_tool(-1)
     elif event.is_action_pressed("scroll_down"):

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://deunk8vyc4fs6"]
+[gd_scene load_steps=6 format=3 uid="uid://deunk8vyc4fs6"]
 
 [ext_resource type="Script" uid="uid://dh3ymqeowo5bs" path="res://ToolMenu/tool_menu.gd" id="1_ru0av"]
-[ext_resource type="Texture2D" uid="uid://doog332sn3p11" path="res://Assets/Icons/tool_shovel.png" id="2_tu7xo"]
-[ext_resource type="Texture2D" uid="uid://doldxjnl1s0od" path="res://Assets/Icons/tool_watering_can.png" id="3_oscv6"]
-[ext_resource type="Texture2D" uid="uid://bjlg1dd5320t2" path="res://Assets/Icons/tool_hoe.png" id="4_5t0lk"]
+[ext_resource type="Texture2D" uid="uid://7v7qs3ckjv3n" path="res://Assets/Icons/tool_shovel.png" id="2_tu7xo"]
+[ext_resource type="Texture2D" uid="uid://bjimhnit8q8fs" path="res://Assets/Icons/tool_watering_can.png" id="3_oscv6"]
+[ext_resource type="Texture2D" uid="uid://bmfdcrhirnr1q" path="res://Assets/Icons/tool_hoe.png" id="4_5t0lk"]
+[ext_resource type="Texture2D" uid="uid://dm6l8qwvjrsf" path="res://Assets/Icons/fertilizer icon.png" id="5_ehib2"]
 
 [node name="ToolMenu" type="Control"]
 layout_mode = 3
@@ -32,6 +33,12 @@ layout_mode = 2
 texture_normal = ExtResource("4_5t0lk")
 stretch_mode = 3
 
+[node name="ToolFertilizer" type="TextureButton" parent="ToolboxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("5_ehib2")
+stretch_mode = 3
+
 [connection signal="pressed" from="ToolboxContainer/ToolShovel" to="." method="_on_tool_shovel_pressed"]
 [connection signal="pressed" from="ToolboxContainer/ToolWateringCan" to="." method="_on_tool_watering_can_pressed"]
 [connection signal="pressed" from="ToolboxContainer/ToolHoe" to="." method="_on_tool_hoe_pressed"]
+[connection signal="pressed" from="ToolboxContainer/ToolFertilizer" to="." method="_on_tool_fertilizer_pressed"]
