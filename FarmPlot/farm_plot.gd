@@ -2,7 +2,6 @@ extends Node2D
 class_name FarmPlotTAT
 
 signal get_money(val: int)
-signal reduce_money (val : int)
 
 const rows = 12
 const cols = 15
