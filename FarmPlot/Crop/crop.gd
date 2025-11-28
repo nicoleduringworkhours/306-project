@@ -6,6 +6,7 @@ var rows: int
 var cols: int
 const STAGES: int = 5
 const STAGE_TIME: int = 2
+var cost_of_crop = 0
 
 enum actions {ADVANCE=-1, FAIL=-2, TRY_GROW=-3, HARVEST=-4} ## actions on tiles
 
@@ -67,7 +68,18 @@ func _cell_update(x: int, y: int, state: int) -> void:
 
 # Controller
 signal harvested(val: int)
-signal seed_planted(crop_type : Crop.crop)
+signal seed_planted(cost_of_crop: int)
+
+func want_to_plant(crop_type: Crop.crop) -> bool:
+    match crop_type:
+         Crop.crop.CORN: 
+            cost_of_crop = 3
+         Crop.crop.WHEAT:
+             cost_of_crop = 2
+         Crop.crop.POTATO:
+            cost_of_crop = 5
+            
+    return Money.money >= cost_of_crop
 
 func hoe_press(loc: Vector2):
     var a = local_to_map(loc)
@@ -76,11 +88,13 @@ func hoe_press(loc: Vector2):
 
 func shovel_press(loc: Vector2, _seed: Crop.crop) -> void:
     var a = local_to_map(loc)
+    var can_plant = want_to_plant(_seed)
     if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
         if pm.can_plant(a.x,a.y) and ag.get_tile(a.x,a.y) == 0:
-            seed_planted.emit(_seed) #emit signal to seed_planted
-            ag.transition(a.x,a.y, _seed)
-        _try_harvest(a.x,a.y)
+            if can_plant:
+                seed_planted.emit(cost_of_crop)
+                ag.transition(a.x,a.y, _seed)
+                _try_harvest(a.x,a.y)
     #Sound.play_sfx(Sound.EFFECT.INTERACT)
 
 func _try_harvest(x: int, y: int):
