@@ -1,4 +1,15 @@
 extends Node
 class_name Crop
 
-enum crop {NONE=0, CORN=9, WHEAT=5, POTATO=7}
+enum crop {
+    NONE,
+    BEAN,
+    TOMATO,
+    EGGPLANT,
+    PINEAPPLE,
+    WHEAT,
+    STRAWBERRY,
+    POTATO,
+    ORANGE,
+    CORN,
+}
