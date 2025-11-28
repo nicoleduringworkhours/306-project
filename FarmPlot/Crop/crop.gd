@@ -77,7 +77,7 @@ func hoe_press(loc: Vector2):
 func shovel_press(loc: Vector2, _seed: Crop.crop) -> void:
     var a = local_to_map(loc)
     if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
-        if pm.can_plant(a.x,a.y):
+        if pm.can_plant(a.x,a.y) and ag.get_tile(a.x,a.y) == 0:
             seed_planted.emit(_seed) #emit signal to seed_planted
             ag.transition(a.x,a.y, _seed)
         _try_harvest(a.x,a.y)
@@ -85,13 +85,13 @@ func shovel_press(loc: Vector2, _seed: Crop.crop) -> void:
 
 func _try_harvest(x: int, y: int):
     var val = ag.get_tile(x, y)
-    if val != 0:
-        val = 2*(val-10)
-    ag.transition(x,y, actions.HARVEST)
-    if ag.get_tile(x, y) == Crop.crop.NONE: # harvest success
-        harvested.emit(val)
+    if val != 0 and Crop.crop_val.has(val-10):
+        val = Crop.crop_val[val-10]
+
+        ag.transition(x,y, actions.HARVEST)
+        if ag.get_tile(x, y) == Crop.crop.NONE: # harvest success
+            harvested.emit(val)
 
 func got_watered(x: int, y: int):
     ag.transition(x, y, actions.TRY_GROW)
 
-    
