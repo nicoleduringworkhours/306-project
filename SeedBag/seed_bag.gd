@@ -1,27 +1,18 @@
-extends Control
-class_name SeedBag
+class_name SeedBag extends Control
 
 var prev_button: BagButton
+var packed_gridsquare: PackedScene = preload("res://SeedBag/grid_square.tscn")
 
-#enum crop {NONE=0, CORN=9, WHEAT=5, POTATO=7}
 var current_crop: Crop.crop = Crop.crop.CORN
 
 func _ready() -> void:
-    %GridSquare.set_crop(Crop.crop.CORN)
-    %GridSquare2.set_crop(Crop.crop.POTATO)
-    %GridSquare3.set_crop(Crop.crop.WHEAT)
-
-    %GridSquare.modulate_button.connect(_modulate_button)
-    %GridSquare2.modulate_button.connect(_modulate_button)
-    %GridSquare3.modulate_button.connect(_modulate_button)
-    %GridSquare4.modulate_button.connect(_modulate_button)
-    %GridSquare5.modulate_button.connect(_modulate_button)
-    %GridSquare6.modulate_button.connect(_modulate_button)
-    %GridSquare7.modulate_button.connect(_modulate_button)
-    %GridSquare8.modulate_button.connect(_modulate_button)
-    %GridSquare9.modulate_button.connect(_modulate_button)
-
-    _modulate_button(%GridSquare)
+    var crop_keys = Crop.crop.keys()
+    var n_crops = Crop.crop.size()
+    for i in range(n_crops-1):
+        %SeedGrid.add_child(packed_gridsquare.instantiate())
+        %SeedGrid.get_child(i).set_crop(Crop.crop.get(crop_keys[i+1]))
+        %SeedGrid.get_child(i).modulate_button.connect(_modulate_button)
+    _modulate_button(%SeedGrid.get_child(0))
 
 func _tool_selected(t: int) -> void:
     visible = t == 0

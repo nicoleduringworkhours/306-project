@@ -1,11 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://b0qraxo3c3v01"]
+[gd_scene load_steps=3 format=3 uid="uid://b0qraxo3c3v01"]
 
 [ext_resource type="Texture2D" uid="uid://e5bswr0bhnnw" path="res://Assets/SeedBag/seed_bag_background.png" id="1_41hfe"]
 [ext_resource type="Script" uid="uid://bgkmxa2k54eq2" path="res://SeedBag/seed_bag.gd" id="1_wp4uc"]
-[ext_resource type="PackedScene" uid="uid://cl2h68hhvo662" path="res://SeedBag/grid_square.tscn" id="2_wp4uc"]
-[ext_resource type="Texture2D" uid="uid://6ktg5lemd5iw" path="res://Assets/SeedBag/corn.png" id="4_10rax"]
-[ext_resource type="Texture2D" uid="uid://kcmgukasgtp1" path="res://Assets/SeedBag/potato.png" id="5_0a3hj"]
-[ext_resource type="Texture2D" uid="uid://c0ibekwn3r4ik" path="res://Assets/SeedBag/wheat.png" id="6_1i2bb"]
 
 [node name="SeedBag" type="Control"]
 layout_mode = 3
@@ -43,45 +39,7 @@ theme_override_font_sizes/font_size = 32
 text = "Seed Bag"
 horizontal_alignment = 1
 
-[node name="GridContainer" type="GridContainer" parent="Background/VBoxContainer"]
+[node name="SeedGrid" type="GridContainer" parent="Background/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 columns = 3
-
-[node name="GridSquare" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
-unique_name_in_owner = true
-layout_mode = 2
-icon = ExtResource("4_10rax")
-
-[node name="GridSquare2" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
-unique_name_in_owner = true
-layout_mode = 2
-icon = ExtResource("5_0a3hj")
-
-[node name="GridSquare3" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
-unique_name_in_owner = true
-layout_mode = 2
-icon = ExtResource("6_1i2bb")
-
-[node name="GridSquare4" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="GridSquare5" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="GridSquare6" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="GridSquare7" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="GridSquare8" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="GridSquare9" parent="Background/VBoxContainer/GridContainer" instance=ExtResource("2_wp4uc")]
-unique_name_in_owner = true
-layout_mode = 2
