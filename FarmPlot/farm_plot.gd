@@ -19,11 +19,9 @@ func _ready() -> void:
     add_child(_c)
 
     _c.harvested.connect(get_money.emit)
+    _c.seed_planted.connect(seed_planted)
     _p.got_watered.connect(_c.got_watered)
-    
-
-
-
+ 
 func hoe_press(loc: Vector2):
     _p.hoe_press(to_local(loc))
     _c.hoe_press(to_local(loc))
@@ -34,6 +32,8 @@ func shovel_press(loc: Vector2, s: Crop.crop):
 func water_press(loc: Vector2):
     _p.water_press(to_local(loc))
 
+func seed_planted(cost : int) -> void:
+    get_money.emit(-cost)
 
     
         
