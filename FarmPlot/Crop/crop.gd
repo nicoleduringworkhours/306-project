@@ -70,15 +70,33 @@ func _cell_update(x: int, y: int, state: int) -> void:
 signal harvested(val: int)
 signal seed_planted(cost_of_crop: int)
 
+    
 func want_to_plant(crop_type: Crop.crop) -> bool:
     match crop_type:
-         Crop.crop.CORN: 
-            cost_of_crop = 3
-         Crop.crop.WHEAT:
-             cost_of_crop = 2
-         Crop.crop.POTATO:
+        #tier 1 : fruits
+        Crop.crop.STRAWBERRY: 
+            cost_of_crop = 10
+        Crop.crop.PINEAPPLE: 
             cost_of_crop = 5
+        Crop.crop.ORANGE: 
+            cost_of_crop = 3
+        Crop.crop.TOMATO:
+            cost_of_crop = 2
             
+        #tier 2 : crops
+        Crop.crop.POTATO:
+            cost_of_crop = 5
+        Crop.crop.WHEAT:
+                cost_of_crop = 2
+        Crop.crop.BEAN:
+            cost_of_crop = 1
+         
+        #tier 3 : vegetables
+        Crop.crop.EGGPLANT:
+                cost_of_crop = 4
+        Crop.crop.CORN:
+                cost_of_crop = 3
+       
     return Money.money >= cost_of_crop
 
 func hoe_press(loc: Vector2):
