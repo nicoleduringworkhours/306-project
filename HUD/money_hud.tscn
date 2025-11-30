@@ -5,5 +5,5 @@
 [node name="Money" type="Label"]
 offset_right = 40.0
 offset_bottom = 23.0
-text = "MONEY: 0"
+text = "MONEY: 50"
 script = ExtResource("2_yu8mg")
