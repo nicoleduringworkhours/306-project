@@ -108,4 +108,3 @@ func _try_harvest(x: int, y: int):
 
 func got_watered(x: int, y: int):
     ag.transition(x, y, actions.TRY_GROW)
-
