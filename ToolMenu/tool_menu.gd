@@ -10,6 +10,7 @@ const TOOLSIZE = 4
 var current_tool
 var prev_button: TextureButton
 @onready var fert_timer: Timer = Timer.new()
+@onready var timer_label: Label = $ToolboxContainer/FertilizerLabel
 var fert_unlock: bool = false
 var money_check: Callable
 var active_tweens: Dictionary = {}  # tracks the tweens per button
@@ -24,9 +25,15 @@ var active_tweens: Dictionary = {}  # tracks the tweens per button
 func _ready():
     select_tool(tools.SHOVEL)
     fert_timer.one_shot = true
-    fert_timer.timeout.connect(func (_x): fert_unlock = false)
+    fert_timer.timeout.connect(func ():
+        fert_unlock = false
+        timer_label.visible = false
+    )
     fert_timer.wait_time = FERTILIZER_DURATION
     add_child(fert_timer)
+
+func _process(_delta: float):
+    timer_label.text = "Fertilizer Time: " + str(fert_timer.get_time_left() as int)
 
 func set_money_ref(money_func: Callable) -> void:
     money_check = money_func
@@ -105,6 +112,7 @@ func fertilizer_unlocked() -> bool:
     # if not unlocked, tries to unlock for 30
     if not fert_unlock and money_check.call() >= FERTILIZER_COST:
         fert_unlock = true
+        timer_label.visible = true
         fert_timer.start()
         money_change.emit(-FERTILIZER_COST)
     return fert_unlock
