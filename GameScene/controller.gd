@@ -6,6 +6,7 @@ var tlm
 signal water(earl: Vector2)
 signal hoe(earl: Vector2)
 signal shovel(earl: Vector2, bert: Crop.crop)
+signal fertilizer(earl: Vector2, bert: Crop.crop)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -16,6 +17,7 @@ func _ready() -> void:
     water.connect(farm_plot.water_press)
     hoe.connect(farm_plot.hoe_press)
     shovel.connect(farm_plot.shovel_press)
+    fertilizer.connect(farm_plot.fertilizer_press) 
 
     var hud = $Hud
     farm_plot.set_money_ref(hud.get_money)
@@ -30,3 +32,5 @@ func _unhandled_input(event) -> void:
                 hoe.emit(event.position)
             tlm.tools.WATERING_CAN:
                 water.emit(event.position)
+            tlm.tools.FERTILIZER:                           
+                fertilizer.emit(event.position, sb.get_crop())

@@ -31,3 +31,6 @@ func shovel_press(loc: Vector2, s: Crop.crop):
 
 func water_press(loc: Vector2):
     _p.water_press(to_local(loc))
+
+func fertilizer_press(loc: Vector2, s: Crop.crop):
+    _c.fertilizer_press(to_local(loc), s)

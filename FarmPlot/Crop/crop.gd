@@ -1,6 +1,8 @@
 extends TileMapLayer
 class_name CropMap
 
+# Controller signals
+signal seed_planted(crop_type: Crop.crop)
 # Model
 var rows: int
 var cols: int
@@ -99,3 +101,22 @@ func _try_harvest(x: int, y: int):
 
 func got_watered(x: int, y: int):
     ag.transition(x, y, actions.TRY_GROW)
+    
+
+func fertilizer_press(loc: Vector2, _seed: Crop.crop) -> void:
+    var a = local_to_map(loc)
+    if a.x < 0 or a.x >= cols or a.y < 0 or a.y >= rows:
+        return
+    if _seed == Crop.crop.NONE:  #when no seed selected
+        return
+    # only on tiles that are allowed to be planted on (i.e., tilled by hoe)
+    var current_state: int = ag.get_tile(a.x, a.y)
+    if pm.can_plant(a.x, a.y) and current_state == Crop.crop.NONE:
+        # charge for the seed 
+        seed_planted.emit(_seed)
+
+        # sets to fully grown state: 10 + crop_type
+        var final_state: int = 10 + int(_seed)
+
+        ag.set_tile(a.x, a.y, final_state)
+        _cell_update(a.x, a.y, final_state)
