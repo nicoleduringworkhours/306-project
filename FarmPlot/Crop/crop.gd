@@ -3,6 +3,12 @@ class_name CropMap
 
 # Controller signals
 signal seed_planted(crop_type: Crop.crop)
+# Fertilizer unlock state
+var fertilizer_unlocked: bool = false
+var fertilizer_unlock_end_time: float = 0.0
+
+const FERTILIZER_COST := 30
+const FERTILIZER_DURATION := 120.0  # 3 minutes in seconds
 # Model
 var rows: int
 var cols: int
@@ -104,19 +110,47 @@ func got_watered(x: int, y: int):
     
 
 func fertilizer_press(loc: Vector2, _seed: Crop.crop) -> void:
-    var a = local_to_map(loc)
+    var a := local_to_map(loc)
+
+    # bounds check
     if a.x < 0 or a.x >= cols or a.y < 0 or a.y >= rows:
         return
-    if _seed == Crop.crop.NONE:  #when no seed selected
+
+    # no seed selected
+    if _seed == Crop.crop.NONE:
         return
-    # only on tiles that are allowed to be planted on (i.e., tilled by hoe)
+
+    # --- unlock / timer logic ---
+    var now := Time.get_unix_time_from_system()
+
+    # if previously unlocked but time expired, relock
+    if fertilizer_unlocked and now >= fertilizer_unlock_end_time:
+        fertilizer_unlocked = false
+
+    # if not unlocked, tries to unlock for 30
+    if not fertilizer_unlocked:
+        var current_money: int = money_check.call()
+        if current_money < FERTILIZER_COST:
+            print("Not enough money to unlock fertilizer (need %d)." % FERTILIZER_COST)
+            return
+
+        # pay 30 once and start the window
+        money_change.emit(-FERTILIZER_COST)
+        fertilizer_unlocked = true
+        fertilizer_unlock_end_time = now + FERTILIZER_DURATION
+        print("Fertilizer unlocked for %d seconds." % int(FERTILIZER_DURATION))
+
     var current_state: int = ag.get_tile(a.x, a.y)
-    if pm.can_plant(a.x, a.y) and current_state == Crop.crop.NONE:
-        # charge for the seed 
-        seed_planted.emit(_seed)
 
-        # sets to fully grown state: 10 + crop_type
-        var final_state: int = 10 + int(_seed)
+    # only on tiles that are allowed to be planted on (i.e., tilled by hoe) and currently empty
+    if not pm.can_plant(a.x, a.y) or current_state != Crop.crop.NONE:
+        return
 
-        ag.set_tile(a.x, a.y, final_state)
-        _cell_update(a.x, a.y, final_state)
+    # charges the seed being planted 
+    seed_planted.emit(_seed)
+
+    # set to fully grown state: 10 + crop_type
+    var final_state: int = 10 + int(_seed)
+    ag.set_tile(a.x, a.y, final_state)
+    _cell_update(a.x, a.y, final_state)
+    Sound.play_sfx(Sound.EFFECT.INTERACT)
