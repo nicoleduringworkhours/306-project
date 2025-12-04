@@ -36,7 +36,7 @@ text = "Press Escape to pause
 Use the hoe to till dirt
 Use the Shovel to plant crops
 Use the Water can to help crops grow
-Harvest grown crops with the  hoe"
+Harvest grown crops with the shovel or the hoe"
 
 [node name="Hud" parent="." instance=ExtResource("6_i2arf")]
 offset_left = 1005.0

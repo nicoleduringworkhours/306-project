@@ -38,7 +38,7 @@ func _on_tool_watering_can_pressed() -> void:
 
 func _on_tool_hoe_pressed() -> void:
     select_tool(tools.HOE)
-    
+
 func _on_tool_fertilizer_pressed() -> void:
     select_tool(tools.FERTILIZER)
 

@@ -18,7 +18,8 @@ func _ready() -> void:
     shovel.connect(farm_plot.shovel_press)
 
     var hud = $Hud
-    farm_plot.get_money.connect(hud.add_money)
+    farm_plot.set_money_ref(hud.get_money)
+    farm_plot.money_change.connect(hud.add_money)
 
 func _unhandled_input(event) -> void:
     if event.is_action_pressed("click"):

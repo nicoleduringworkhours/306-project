@@ -6,7 +6,8 @@ var rows: int
 var cols: int
 const STAGES: int = 5
 const STAGE_TIME: int = 2
-var cost_of_crop = 0
+
+var money_check: Callable
 
 enum actions {ADVANCE=-1, FAIL=-2, TRY_GROW=-3, HARVEST=-4} ## actions on tiles
 
@@ -25,6 +26,9 @@ func data(r: int, c: int, p: PlotMap) -> CropMap:
     cols = c
     pm = p
     return self
+
+func set_money_ref(money_func: Callable) -> void:
+    money_check = money_func
 
 ## set-up. Creates a TM_Manager model, does initial renders of all tiles
 ## actions on tiles
@@ -67,37 +71,7 @@ func _cell_update(x: int, y: int, state: int) -> void:
         ag.transition(x,y, actions.FAIL)
 
 # Controller
-signal harvested(val: int)
-signal seed_planted(cost_of_crop: int)
-
-    
-func want_to_plant(crop_type: Crop.crop) -> bool:
-    match crop_type:
-        #tier 1 : fruits
-        Crop.crop.STRAWBERRY: 
-            cost_of_crop = 10
-        Crop.crop.PINEAPPLE: 
-            cost_of_crop = 5
-        Crop.crop.ORANGE: 
-            cost_of_crop = 3
-        Crop.crop.TOMATO:
-            cost_of_crop = 2
-            
-        #tier 2 : crops
-        Crop.crop.POTATO:
-            cost_of_crop = 5
-        Crop.crop.WHEAT:
-                cost_of_crop = 2
-        Crop.crop.BEAN:
-            cost_of_crop = 1
-         
-        #tier 3 : vegetables
-        Crop.crop.EGGPLANT:
-                cost_of_crop = 4
-        Crop.crop.CORN:
-                cost_of_crop = 3
-       
-    return Money.money >= cost_of_crop
+signal money_change(val: int)
 
 func hoe_press(loc: Vector2):
     var a = local_to_map(loc)
@@ -106,13 +80,12 @@ func hoe_press(loc: Vector2):
 
 func shovel_press(loc: Vector2, _seed: Crop.crop) -> void:
     var a = local_to_map(loc)
-    var can_plant = want_to_plant(_seed)
     if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
-        if pm.can_plant(a.x,a.y) and ag.get_tile(a.x,a.y) == 0:
-            if can_plant:
-                seed_planted.emit(cost_of_crop)
-                ag.transition(a.x,a.y, _seed)
-                _try_harvest(a.x,a.y)
+        if pm.can_plant(a.x,a.y) and ag.get_tile(a.x,a.y) == 0 \
+                and money_check.call() >= Crop.crop_cost[_seed]:
+            money_change.emit(-Crop.crop_cost[_seed])
+            ag.transition(a.x,a.y, _seed)
+        _try_harvest(a.x,a.y)
     #Sound.play_sfx(Sound.EFFECT.INTERACT)
 
 func _try_harvest(x: int, y: int):
@@ -122,7 +95,7 @@ func _try_harvest(x: int, y: int):
 
         ag.transition(x,y, actions.HARVEST)
         if ag.get_tile(x, y) == Crop.crop.NONE: # harvest success
-            harvested.emit(val)
+            money_change.emit(val)
 
 func got_watered(x: int, y: int):
     ag.transition(x, y, actions.TRY_GROW)

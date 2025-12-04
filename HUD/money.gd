@@ -1,12 +1,19 @@
 extends Label
+class_name Money
 
-var money: int = 50
+@export var money: int = 50
 const text_pref: String = "MONEY: "
 
+func _ready() -> void:
+    text = text_pref + str(money)
+
 func set_money(m: int) -> void:
-    Money.money = m
-    text = text_pref + str(Money.money)
+    money = m
+    text = text_pref + str(money)
 
 func add_money(m: int) -> void:
-    Money.money += m
-    text = text_pref + str(Money.money)
+    money += m
+    text = text_pref + str(money)
+
+func get_money() -> int:
+    return money

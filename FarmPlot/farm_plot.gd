@@ -1,15 +1,13 @@
 extends Node2D
 class_name FarmPlotTAT
 
-signal get_money(val: int)
+signal money_change(val: int)
 
 const rows = 12
 const cols = 15
 
 var _p: PlotMap
 var _c: CropMap
-
-var cost_of_crop = 0
 
 func _ready() -> void:
     _p = load("res://FarmPlot/Plot/plot.tscn").instantiate().data(rows, cols)
@@ -18,10 +16,12 @@ func _ready() -> void:
     add_child(_p)
     add_child(_c)
 
-    _c.harvested.connect(get_money.emit)
-    _c.seed_planted.connect(seed_planted)
+    _c.money_change.connect(money_change.emit)
     _p.got_watered.connect(_c.got_watered)
- 
+
+func set_money_ref(money_func: Callable):
+    _c.set_money_ref(money_func)
+
 func hoe_press(loc: Vector2):
     _p.hoe_press(to_local(loc))
     _c.hoe_press(to_local(loc))
@@ -31,10 +31,3 @@ func shovel_press(loc: Vector2, s: Crop.crop):
 
 func water_press(loc: Vector2):
     _p.water_press(to_local(loc))
-
-func seed_planted(cost : int) -> void:
-    get_money.emit(-cost)
-
-    
-        
-        
