@@ -3,12 +3,7 @@ class_name CropMap
 
 # Controller signals
 signal seed_planted(crop_type: Crop.crop)
-# Fertilizer unlock state
-var fertilizer_unlocked: bool = false
-var fertilizer_unlock_end_time: float = 0.0
 
-const FERTILIZER_COST := 30
-const FERTILIZER_DURATION := 120.0  # 3 minutes in seconds
 # Model
 var rows: int
 var cols: int
@@ -47,10 +42,10 @@ func _ready() -> void:
                 var v = (STAGES-i)*10+c
                 # initiate growth
                 state_machine[Vector2i(v, actions.TRY_GROW)] = -100*v
-                timer_states[-100*v] = Vector2i(-100*v+1, STAGE_TIME)
+                timer_states[-100*v] = Vector2i(-100*v-1, STAGE_TIME)
                 # growth checks
-                state_machine[Vector2i(-100*v+1, actions.ADVANCE)] = v-10
-                state_machine[Vector2i(-100*v+1, actions.FAIL)] = v
+                state_machine[Vector2i(-100*v-1, actions.ADVANCE)] = v-10
+                state_machine[Vector2i(-100*v-1, actions.FAIL)] = v
 
             # harvest crop
             state_machine[Vector2i(10+c, actions.HARVEST)] = Crop.crop.NONE
@@ -107,50 +102,15 @@ func _try_harvest(x: int, y: int):
 
 func got_watered(x: int, y: int):
     ag.transition(x, y, actions.TRY_GROW)
-    
 
-func fertilizer_press(loc: Vector2, _seed: Crop.crop) -> void:
-    var a := local_to_map(loc)
-
+func fertilizer_press(loc: Vector2) -> void:
+    var a = local_to_map(loc)
     # bounds check
-    if a.x < 0 or a.x >= cols or a.y < 0 or a.y >= rows:
-        return
+    if a.x >= 0 and a.x < cols and a.y >= 0 and a.y < rows:
+        var cur_state: int = ag.get_tile(a.x, a.y)
+        if cur_state < 0:
+            cur_state = (abs(cur_state) / 100) as int
 
-    # no seed selected
-    if _seed == Crop.crop.NONE:
-        return
-
-    # --- unlock / timer logic ---
-    var now := Time.get_unix_time_from_system()
-
-    # if previously unlocked but time expired, relock
-    if fertilizer_unlocked and now >= fertilizer_unlock_end_time:
-        fertilizer_unlocked = false
-
-    # if not unlocked, tries to unlock for 30
-    if not fertilizer_unlocked:
-        var current_money: int = money_check.call()
-        if current_money < FERTILIZER_COST:
-            print("Not enough money to unlock fertilizer (need %d)." % FERTILIZER_COST)
-            return
-
-        # pay 30 once and start the window
-        money_change.emit(-FERTILIZER_COST)
-        fertilizer_unlocked = true
-        fertilizer_unlock_end_time = now + FERTILIZER_DURATION
-        print("Fertilizer unlocked for %d seconds." % int(FERTILIZER_DURATION))
-
-    var current_state: int = ag.get_tile(a.x, a.y)
-
-    # only on tiles that are allowed to be planted on (i.e., tilled by hoe) and currently empty
-    if not pm.can_plant(a.x, a.y) or current_state != Crop.crop.NONE:
-        return
-
-    # charges the seed being planted 
-    seed_planted.emit(_seed)
-
-    # set to fully grown state: 10 + crop_type
-    var final_state: int = 10 + int(_seed)
-    ag.set_tile(a.x, a.y, final_state)
-    _cell_update(a.x, a.y, final_state)
-    Sound.play_sfx(Sound.EFFECT.INTERACT)
+        if cur_state != 0:
+            ag.set_tile(a.x, a.y, (cur_state % 10) + 10) # fully grown state: 10+cur_state
+            Sound.play_sfx(Sound.EFFECT.INTERACT)

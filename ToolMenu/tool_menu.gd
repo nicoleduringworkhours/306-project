@@ -2,11 +2,16 @@ extends Control
 
 signal tool_selected(t: tools)
 
+const FERTILIZER_COST = 30
+const FERTILIZER_DURATION = 120.0 # in seconds
+
 enum tools {SHOVEL=0, WATERING_CAN=1, HOE=2, FERTILIZER= 3}
 const TOOLSIZE = 4
 var current_tool
 var prev_button: TextureButton
-
+@onready var fert_timer: Timer = Timer.new()
+var fert_unlock: bool = false
+var money_check: Callable
 var active_tweens: Dictionary = {}  # tracks the tweens per button
 
 @onready var tool_buttons := {
@@ -18,6 +23,13 @@ var active_tweens: Dictionary = {}  # tracks the tweens per button
 
 func _ready():
     select_tool(tools.SHOVEL)
+    fert_timer.one_shot = true
+    fert_timer.timeout.connect(func (_x): fert_unlock = false)
+    fert_timer.wait_time = FERTILIZER_DURATION
+    add_child(fert_timer)
+
+func set_money_ref(money_func: Callable) -> void:
+    money_check = money_func
 
 func select_tool(t: tools):
     current_tool = t
@@ -86,3 +98,13 @@ func switch_tool(direction: int):
 
 func get_selected_tool() -> tools:
     return current_tool
+
+signal money_change(val: int)
+
+func fertilizer_unlocked() -> bool:
+    # if not unlocked, tries to unlock for 30
+    if not fert_unlock and money_check.call() >= FERTILIZER_COST:
+        fert_unlock = true
+        fert_timer.start()
+        money_change.emit(-FERTILIZER_COST)
+    return fert_unlock

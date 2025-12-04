@@ -1,18 +1,17 @@
 extends Node2D
 
-var tlm
+@onready var tlm = $ToolMenu
 @onready var sb: SeedBag = $SeedBag
 @onready var hud: Money = $Hud
 
 signal water(earl: Vector2)
 signal hoe(earl: Vector2)
 signal shovel(earl: Vector2, bert: Crop.crop)
-signal fertilizer(earl: Vector2, bert: Crop.crop)
+signal fertilizer(earl: Vector2)
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-    tlm = $ToolMenu
     tlm.tool_selected.connect(sb._tool_selected)
 
     var farm_plot = $farmplot
@@ -21,9 +20,11 @@ func _ready() -> void:
     shovel.connect(farm_plot.shovel_press)
     fertilizer.connect(farm_plot.fertilizer_press) 
 
-    var hud = $Hud
     farm_plot.set_money_ref(hud.get_money)
     farm_plot.money_change.connect(hud.add_money)
+
+    tlm.money_change.connect(hud.add_money)
+    tlm.set_money_ref(hud.get_money)
 
 func _unhandled_input(event) -> void:
     if event.is_action_pressed("click"):
@@ -34,7 +35,6 @@ func _unhandled_input(event) -> void:
                 hoe.emit(event.position)
             tlm.tools.WATERING_CAN:
                 water.emit(event.position)
-            tlm.tools.FERTILIZER:                           
-                fertilizer.emit(event.position, sb.get_crop())
-            
- 
+            tlm.tools.FERTILIZER:
+                if tlm.fertilizer_unlocked():
+                    fertilizer.emit(event.position)
