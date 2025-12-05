@@ -1,48 +1,71 @@
 extends Control
+class_name ToolMenu
+## Tool selection UI controller
+##
+## Responsibilities:
+## - Update cursor icon and visual highlight for the selected tool.
+## - Handle tool selection via buttons, hotkeys, and mouse scroll.
 
-signal tool_selected(t: tools)
+signal tool_selected(t: ToolModel.tools)
+signal money_change(val: int)
 
-enum tools {SHOVEL=0, WATERING_CAN=1, HOE=2, FERTILIZER= 3}
-const TOOLSIZE = 4
-var current_tool
+@onready var timer_label: Label = $ToolboxContainer/FertilizerLabel ## Fertilizer timer label
+
+## the model containing state
+var model: ToolModel
+
+## tracks the previously highlighted button so it can be un-highlighted
 var prev_button: TextureButton
+var active_tweens: Dictionary = {} # tracks the tweens per button
 
-var active_tweens: Dictionary = {}  # tracks the tweens per button
-
-@onready var tool_buttons := {
-    tools.SHOVEL: $"ToolboxContainer/ToolShovel",
-    tools.WATERING_CAN: $"ToolboxContainer/ToolWateringCan",
-    tools.HOE: $"ToolboxContainer/ToolHoe",
-    tools.FERTILIZER: $"ToolboxContainer/ToolFertilizer"
+## Mapping from tool enum values to their corresponding UI buttons.
+@onready var tool_buttons = {
+    ToolModel.tools.SHOVEL: $ToolboxContainer/ToolShovel,
+    ToolModel.tools.WATERING_CAN: $ToolboxContainer/ToolWateringCan,
+    ToolModel.tools.HOE: $ToolboxContainer/ToolHoe,
+    ToolModel.tools.FERTILIZER: $ToolboxContainer/ToolFertilizer,
 }
 
+## Initializes the toolbox UI, connects engine components to model
+## - Selects the default tool.
 func _ready():
-    select_tool(tools.SHOVEL)
+    # init model
+    model = ToolModel.new()
+    model.model_changed.connect(on_model_changed)
+    model.set_tool(ToolModel.tools.SHOVEL)
+    model.money_change.connect(money_change.emit)
+    add_child(model.get_timer())
 
-func select_tool(t: tools):
-    current_tool = t
+    # bind buttons to model changes
+    for t in ToolModel.tools.keys():
+        tool_buttons[ToolModel.tools[t]].pressed.connect( \
+            model.set_tool.bind(ToolModel.tools[t]))
+
+## Per-frame update of the fertilizer timer label text.
+## Label will only be visible while fertilizer is active.
+func _process(_delta: float):
+    timer_label.text = "Fertilizer Time: " + str(model.get_timer().get_time_left() as int)
+
+## Injects a money-check function from HUD / game controller.
+func set_money_ref(money_func: Callable) -> void:
+    model.set_money_check(money_func)
+
+## Sets the current tool selection and updates related UI/behaviour.
+func on_model_changed():
+    var t = model.get_tool()
+    tool_selected.emit(t)
     highlight_tool(t)
-    Sound.play_sfx(Sound.EFFECT.UI_CLICK)
 
     var tool_icon = tool_buttons[t].texture_normal
     if tool_icon:
         Input.set_custom_mouse_cursor(tool_icon)
 
-    tool_selected.emit(t)
+    Sound.play_sfx(Sound.EFFECT.UI_CLICK)
 
-func _on_tool_shovel_pressed() -> void:
-    select_tool(tools.SHOVEL)
+    timer_label.visible = model.fertilizer_unlocked()
 
-func _on_tool_watering_can_pressed() -> void:
-    select_tool(tools.WATERING_CAN)
-
-func _on_tool_hoe_pressed() -> void:
-    select_tool(tools.HOE)
-
-func _on_tool_fertilizer_pressed() -> void:
-    select_tool(tools.FERTILIZER)
-
-func highlight_tool(t: tools):
+## Visually highlights the selected tool button and un-highlights the previous one.
+func highlight_tool(t: ToolModel.tools):
     var button = tool_buttons[t]
 
     if prev_button and prev_button != button:
@@ -66,23 +89,20 @@ func animate_tween(button: TextureButton, target_scale: Vector2):
 # handles mouse scroll + hotkeys
 func _unhandled_input(event):
     if event.is_action_pressed("hotkey_1"):
-        select_tool(tools.SHOVEL)
+        model.set_tool(ToolModel.tools.SHOVEL)
     elif event.is_action_pressed("hotkey_2"):
-        select_tool(tools.WATERING_CAN)
+        model.set_tool(ToolModel.tools.WATERING_CAN)
     elif event.is_action_pressed("hotkey_3"):
-        select_tool(tools.HOE)
+        model.set_tool(ToolModel.tools.HOE)
     elif event.is_action_pressed("hotkey_4"):
-        select_tool(tools.FERTILIZER)
+        model.set_tool(ToolModel.tools.FERTILIZER)
     elif event.is_action_pressed("scroll_up"):
-        switch_tool(-1)
+        model.switch_tool(-1)
     elif event.is_action_pressed("scroll_down"):
-        switch_tool(1)
+        model.switch_tool(1)
 
-func switch_tool(direction: int):
-    var t = ((current_tool as int) + direction) % TOOLSIZE
-    if t < 0:
-        t = TOOLSIZE - 1
-    select_tool(t)
+func get_selected_tool() -> ToolModel.tools:
+    return model.get_tool()
 
-func get_selected_tool() -> tools:
-    return current_tool
+func fertilizer_unlocked() -> bool:
+    return model.fertilizer_unlocked()
