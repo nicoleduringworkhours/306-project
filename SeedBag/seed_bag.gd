@@ -13,7 +13,6 @@ var seed_states: Dictionary[Crop.crop, bool]
 var seed_unlocked: Dictionary[Crop.crop, bool]
 
 func _init():
-    money_check = money_func
     var crop_keys = Crop.crop.keys()
     for i in range(Crop.crop.size()-1): # -1 to not include Crop.crop.NONE
         seed_states[Crop.crop.get(crop_keys[i+1])] = false
