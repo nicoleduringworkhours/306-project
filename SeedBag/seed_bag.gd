@@ -1,30 +1,41 @@
-class_name SeedBag extends Control
+class_name SeedBag
 
-var prev_button: BagButton
-var packed_gridsquare: PackedScene = preload("res://SeedBag/grid_square.tscn")
+signal seed_bag_updated()
 
-var current_crop: Crop.crop = Crop.crop.CORN
+var money: Money
+## A reference to the currently selected crop. This way code that only cares
+## about which crop is selected doesn't have to search the whole dictionary.
+var current_crop: Crop.crop = Crop.crop.NONE
+## Dictionary that maps Crop types to whether or not they are selected.
+## Selected if true, not selected if false.
+var seed_states: Dictionary[Crop.crop, bool]
+## TODO: Document
+var seed_unlocked: Dictionary[Crop.crop, bool]
 
-func _ready() -> void:
+func _init():
+    money_check = money_func
     var crop_keys = Crop.crop.keys()
-    var n_crops = Crop.crop.size()
-    for i in range(n_crops-1):
-        %SeedGrid.add_child(packed_gridsquare.instantiate())
-        %SeedGrid.get_child(i).set_crop(Crop.crop.get(crop_keys[i+1]))
-        %SeedGrid.get_child(i).modulate_button.connect(_modulate_button)
-    _modulate_button(%SeedGrid.get_child(0))
-
-func _tool_selected(t: int) -> void:
-    visible = t == 0
-
-func _modulate_button(button: BagButton) -> void:
-    if prev_button:
-        prev_button.modulate = Color(1,1,1,1)
-    button.modulate = Color(1,1,0,1)
-    prev_button = button
-    current_crop = button.button_crop
+    for i in range(Crop.crop.size()-1): # -1 to not include Crop.crop.NONE
+        seed_states[Crop.crop.get(crop_keys[i+1])] = false
+    for i in range(Crop.crop.size()-1): # -1 to not include Crop.crop.NONE
+        seed_unlocked[Crop.crop.get(crop_keys[i+1])] = false
 
 func get_crop() -> Crop.crop:
     return current_crop
 
-    
+func set_crop(crop: Crop.crop) -> void:
+    if current_crop != Crop.crop.NONE:
+        seed_states[current_crop] = false
+    if crop != Crop.crop.NONE && seed_unlocked[crop]:
+        current_crop = crop
+        seed_states[current_crop] = true
+    seed_bag_updated.emit()
+
+func set_money(m: Money) -> void:
+    money = m
+
+func unlock_crop(crop: Crop.crop) -> void:
+    if seed_unlocked[crop] || money.get_money() < Crop.crop_unlock_cost[crop]:
+        return
+    money.add_money(-Crop.crop_unlock_cost[crop])
+    seed_bag_updated.emit()
