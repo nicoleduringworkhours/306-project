@@ -29,12 +29,12 @@ func _ready() -> void:
 func _unhandled_input(event) -> void:
     if event.is_action_pressed("click"):
         match tlm.get_selected_tool():
-            tlm.tools.SHOVEL:
+            ToolModel.tools.SHOVEL:
                 shovel.emit(event.position, sb.get_crop())
-            tlm.tools.HOE:
+            ToolModel.tools.HOE:
                 hoe.emit(event.position)
-            tlm.tools.WATERING_CAN:
+            ToolModel.tools.WATERING_CAN:
                 water.emit(event.position)
-            tlm.tools.FERTILIZER:
+            ToolModel.tools.FERTILIZER:
                 if tlm.fertilizer_unlocked():
                     fertilizer.emit(event.position)
