@@ -42,8 +42,3 @@ stretch_mode = 3
 visible = false
 layout_mode = 2
 text = "Fertilizer Time: "
-
-[connection signal="pressed" from="ToolboxContainer/ToolShovel" to="." method="_on_tool_shovel_pressed"]
-[connection signal="pressed" from="ToolboxContainer/ToolWateringCan" to="." method="_on_tool_watering_can_pressed"]
-[connection signal="pressed" from="ToolboxContainer/ToolHoe" to="." method="_on_tool_hoe_pressed"]
-[connection signal="pressed" from="ToolboxContainer/ToolFertilizer" to="." method="_on_tool_fertilizer_pressed"]
