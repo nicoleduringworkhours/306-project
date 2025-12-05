@@ -1,8 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://cl2h68hhvo662"]
 
-[ext_resource type="Script" uid="uid://c5krwntvqvfgi" path="res://SeedBag/grid_square.gd" id="1_pkvww"]
+[ext_resource type="Script" uid="uid://c5krwntvqvfgi" path="res://SeedBag/seed_bag_button.gd" id="1_pkvww"]
 
-[node name="GridSquare" type="Button"]
+[node name="SeedBagButton" type="Button"]
 modulate = Color(0.49803922, 0.49803922, 0.49803922, 1)
 custom_minimum_size = Vector2(64, 64)
 disabled = true
