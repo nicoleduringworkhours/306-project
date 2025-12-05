@@ -1,20 +1,28 @@
 extends Control
+## Tool selection UI controller for the farming game.
+## 
+## Responsibilities:
+## - Manage the active tool (shovel, watering can, hoe, fertilizer).
+## - Update cursor icon and visual highlight for the selected tool.
+## - Handle tool selection via buttons, hotkeys, and mouse scroll.
+## - Manage fertilizer unlocking: cost, duration timer, and UI label.
 
-signal tool_selected(t: tools)
+signal tool_selected(t: tools)  
 
-const FERTILIZER_COST = 30
-const FERTILIZER_DURATION = 120.0 # in seconds
+const FERTILIZER_COST = 30  #Cost to access fertilizer
+const FERTILIZER_DURATION = 120.0 # in seconds (3 mins)
 
 enum tools {SHOVEL=0, WATERING_CAN=1, HOE=2, FERTILIZER= 3}
 const TOOLSIZE = 4
 var current_tool
 var prev_button: TextureButton
 @onready var fert_timer: Timer = Timer.new()
-@onready var timer_label: Label = $ToolboxContainer/FertilizerLabel
+@onready var timer_label: Label = $ToolboxContainer/FertilizerLabel  #Fertilizer timer label
 var fert_unlock: bool = false
 var money_check: Callable
 var active_tweens: Dictionary = {}  # tracks the tweens per button
 
+## Mapping from tool enum values to their corresponding UI buttons.
 @onready var tool_buttons := {
     tools.SHOVEL: $"ToolboxContainer/ToolShovel",
     tools.WATERING_CAN: $"ToolboxContainer/ToolWateringCan",
@@ -22,6 +30,9 @@ var active_tweens: Dictionary = {}  # tracks the tweens per button
     tools.FERTILIZER: $"ToolboxContainer/ToolFertilizer"
 }
 
+## Initializes the toolbox UI and fertilizer timer.
+## - Selects the default tool.
+## - Configures fertilizer timer behaviour.
 func _ready():
     select_tool(tools.SHOVEL)
     fert_timer.one_shot = true
@@ -32,12 +43,16 @@ func _ready():
     fert_timer.wait_time = FERTILIZER_DURATION
     add_child(fert_timer)
 
+## Per-frame update of the fertilizer timer label text.
+## Label will typically only be visible while fertilizer is active.
 func _process(_delta: float):
     timer_label.text = "Fertilizer Time: " + str(fert_timer.get_time_left() as int)
 
+## Injects a money-check function from HUD / game controller.
 func set_money_ref(money_func: Callable) -> void:
     money_check = money_func
 
+## Sets the current tool selection and updates related UI/behaviour.
 func select_tool(t: tools):
     current_tool = t
     highlight_tool(t)
@@ -61,6 +76,7 @@ func _on_tool_hoe_pressed() -> void:
 func _on_tool_fertilizer_pressed() -> void:
     select_tool(tools.FERTILIZER)
 
+## Visually highlights the selected tool button and un-highlights the previous one.
 func highlight_tool(t: tools):
     var button = tool_buttons[t]
 
@@ -97,6 +113,8 @@ func _unhandled_input(event):
     elif event.is_action_pressed("scroll_down"):
         switch_tool(1)
 
+## Cycles the selected tool forward or backward.
+## @param direction: +1 to go forward, -1 to go backward in the tool list.
 func switch_tool(direction: int):
     var t = ((current_tool as int) + direction) % TOOLSIZE
     if t < 0:
@@ -108,8 +126,11 @@ func get_selected_tool() -> tools:
 
 signal money_change(val: int)
 
+## Checks whether fertilizer is unlocked; if not, attempts to unlock it.
+## - If `fert_unlock` is false and the player has enough money:
+    ##     - Deducts `FERTILIZER_COST` from player via `money_change` signal, Starts the fertilizer timer, Shows the countdown label.
+## @return: `true` if fertilizer is unlocked/active, `false` otherwise.
 func fertilizer_unlocked() -> bool:
-    # if not unlocked, tries to unlock for 30
     if not fert_unlock and money_check.call() >= FERTILIZER_COST:
         fert_unlock = true
         timer_label.visible = true
