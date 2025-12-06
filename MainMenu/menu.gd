@@ -19,5 +19,6 @@ func _on_quit_button_pressed() -> void:
 
 ## handle option button press, hide the main menu, bring up the option menu
 func option_toggle() -> void:
+    Sound.play_sfx(Sound.EFFECT.UI_CLICK)
     vb.set_visible(not vb.visible)
     opts.set_visible(not opts.visible)
