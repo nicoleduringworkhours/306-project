@@ -37,4 +37,8 @@ func unlock_crop(crop: Crop.crop) -> void:
     if seed_unlocked[crop] || money.get_money() < Crop.crop_unlock_cost[crop]:
         return
     money.add_money(-Crop.crop_unlock_cost[crop])
+    seed_unlocked[crop] = true
     seed_bag_updated.emit()
+
+func get_seed_state(crop: Crop.crop) -> bool:
+    return seed_states[crop]

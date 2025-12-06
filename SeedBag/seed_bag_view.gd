@@ -1,5 +1,4 @@
-extends Control
-class_name SeedBagView
+class_name SeedBagView extends Control
 
 const packed_seed_button: PackedScene = preload("res://SeedBag/seed_bag_button.tscn")
 var n_crops = Crop.crop.size()-1 # -1 because we don't include Crop.crop.NONE

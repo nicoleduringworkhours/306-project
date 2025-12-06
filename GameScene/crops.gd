@@ -55,6 +55,7 @@ const crop_unlock_cost: Dictionary[crop, int] = {
 }
 
 const crop_texture: Dictionary[crop, Resource] = {
+    crop.NONE: preload("res://Assets/SeedBag/lock.png"),
     crop.BEAN: preload("res://Assets/SeedBag/bean.png"),
     crop.TOMATO: preload("res://Assets/SeedBag/tomato.png"),
     crop.EGGPLANT: preload("res://Assets/SeedBag/eggplant.png"),
