@@ -36,8 +36,8 @@ func _ready():
     model.money_change.connect(money_change.emit)
     add_child(model.get_timer())
 
-    # bind buttons to model changes
-    for t in ToolModel.tools.keys():
+    # bind buttons to model changes for shovel, hoe, watering can
+    for t in ToolModel.tools:
         tool_buttons[ToolModel.tools[t]].pressed.connect( \
             model.set_tool.bind(ToolModel.tools[t]))
 
@@ -104,5 +104,8 @@ func _unhandled_input(event):
 func get_selected_tool() -> ToolModel.tools:
     return model.get_tool()
 
+## unlock fertilizer if possible, and return true if fertilizer is
+## unlocked
 func fertilizer_unlocked() -> bool:
+    model.unlock_fertilizer()
     return model.fertilizer_unlocked()

@@ -1,8 +1,7 @@
 class_name PlotMap
 extends TileMapLayer
 
-# Model
-
+## The rows and columns in the farm plot
 var rows: int
 var cols: int
 
@@ -28,6 +27,8 @@ const time_update: Dictionary = {
 ## tile manager model
 var ag: AutomataGrid
 
+## initialize the plot map [param r] rows and [param c] cols
+## returns initialized plot map
 func data(r: int, c: int) -> PlotMap:
     rows = r
     cols = c
@@ -43,34 +44,37 @@ func _ready() -> void:
             set_cell(Vector2i(j,i), 0, Vector2i(ag.get_tile(j,i), 0))
     add_child(ag.get_timer())
 
+## get the cell state at location ([param x], [param y])
 func get_cell_status(x: int, y: int) -> int:
     var t = local_to_map(Vector2(x,y))
     return ag.get_tile(t.x, t.y)
 
+## returns true iff you can plant a crop at location ([param x],[param y])
 func can_plant(x: int, y: int) -> bool:
     return ag.get_tile(x,y) != GRASS
 
+## returns true iff the tile at location ([param x],[param y]) is watered
 func is_watered(x: int, y: int) -> bool:
     return ag.get_tile(x,y) == WET_DIRT
 
-# View
-
-## signal handler to deal with visual updates.
+## emitted when a tile at loc ([param x],[param y]) becomes watered
 signal got_watered(x: int, y: int)
 
+## signal handler to deal with visual updates of the tile at location
+## ([param x], [param y]) in state [param state]
 func _cell_update(x: int, y: int, state) -> void:
     set_cell(Vector2i(x,y), 0, Vector2i(state, 0))
     if state == WET_DIRT:
         got_watered.emit(x, y)
 
-# Controller
-
+## handle hoe press at location [param loc]
 func hoe_press(loc: Vector2):
     var a = local_to_map(loc)
     if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
         Sound.play_sfx(Sound.EFFECT.INTERACT)
         ag.transition(a.x,a.y,actions.TILL)
 
+## handle watering can press at location [param loc]
 func water_press(loc: Vector2):
     var a = local_to_map(loc)
     if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:

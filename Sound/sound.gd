@@ -1,16 +1,21 @@
 extends Node
 
-var master_vol: float = 1
+## handle playing sound effects and background music
 
+var master_vol: float = 1 ## overall volume
+
+## music player and volume
 var music: AudioStreamPlayer
 var music_vol: float = 1
 
+## sfx player and volume
 var sfx: AudioStreamPlayer
 var sfx_vol: float = 1
 
 enum BUS {MASTER, MUSIC, SFX}
 enum EFFECT {UI_CLICK, MENU, INTERACT, GROW, TOOL_SWAP}
 
+## map names to sound effects
 var sfx_lib: Dictionary = {
         EFFECT.UI_CLICK: preload("res://Assets/Sounds/click.mp3"),
         EFFECT.MENU: preload("res://Assets/Sounds/menu.mp3"),
@@ -19,6 +24,7 @@ var sfx_lib: Dictionary = {
         EFFECT.TOOL_SWAP: preload("res://Assets/Sounds/chime.mp3"),
     }
 
+## initialize audio buses and players
 func _ready() -> void:
     # Music bus set up
     music = AudioStreamPlayer.new()
@@ -48,6 +54,8 @@ func _ready() -> void:
 func _repeat() -> void:
     music.play()
 
+## set the volume of the bus [param bus] to volume [param volume]
+## given as a linear value from 0-1
 func set_vol(bus: BUS, volume: float):
     volume = clampf(volume, 0, 1)
     match bus:
@@ -61,6 +69,8 @@ func set_vol(bus: BUS, volume: float):
             sfx_vol = volume
             AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(sfx_vol))
 
+## change the volume of the bus [param bus] by volume [param volume]
+## given as a linear value from 0-1
 func add_vol(bus: BUS, volume: float):
     match bus:
         BUS.MASTER:
@@ -74,11 +84,13 @@ func add_vol(bus: BUS, volume: float):
             sfx_vol = clampf(sfx_vol + volume, 0, 1)
             AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(sfx_vol))
 
+## play the sound effect [param effect]
 func play_sfx(effect: EFFECT):
     if not sfx.playing:
         sfx.play()
     sfx.get_stream_playback().play_stream(sfx_lib[effect])
 
+## get the current volume of the bus [param bus]
 func get_vol(bus: BUS) -> float:
     var v: float = 0
     match bus:

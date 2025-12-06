@@ -117,12 +117,12 @@ func get_tile(x: int, y: int) -> int:
     if x >= 0 and y >= 0 and x < cols and y < rows:
         return tile_data[x + y*cols]
     else:
-        return -1
+        return -1 # invalid
 
 func set_tile(x: int, y: int, state: int) -> void:
     if x >= 0 and y >= 0 and x < cols and y < rows:
         tile_data[x + y*cols] = state
-        cell_update.emit(x, y, state)
+        cell_update.emit(x, y, state) # publish update
 
 func get_cols() -> int:
     return cols
