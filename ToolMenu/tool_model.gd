@@ -51,13 +51,14 @@ func set_tool(t: tools) -> void:
 ## [param direction] +1 to go forward, -1 to go backward in the tool list.
 func switch_tool(direction: int):
     var t = ((current_tool as int) + direction) % TOOLSIZE
-    if t < 0:
+    if t < 0: # wrap around
         t = TOOLSIZE - 1
     set_tool(t)
 
 ## attempts to unlock fertilizer, does nothing if unlocked
 ## or the player cannot afford the fertilizer
 func unlock_fertilizer() -> void:
+    # if fertilzer locked and can unlock
     if not fert_unlock and money_check.call() >= FERTILIZER_COST:
         fert_unlock = true
         fert_timer.start()

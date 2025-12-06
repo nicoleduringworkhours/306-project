@@ -13,12 +13,14 @@ var _c: CropMap ## [member _c] the crop grid
 
 ## initialize children, a crop map and a plot map
 func _ready() -> void:
+    # init children
     _p = load("res://FarmPlot/Plot/plot.tscn").instantiate().data(rows, cols)
     _c = load("res://FarmPlot/Crop/crop.tscn").instantiate().data(rows, cols, _p)
 
     add_child(_p)
     add_child(_c)
 
+    # connect child signals
     _c.money_change.connect(money_change.emit)
     _p.got_watered.connect(_c.got_watered)
 

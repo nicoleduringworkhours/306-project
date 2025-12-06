@@ -44,6 +44,7 @@ var time_update: Dictionary
 ## [param timer_state_machine] optional parameter for how states
 ##      transition on timeout, default is no transitions, can be set later
 func _init(x: int, y: int, init_state: int = 0, state_machine: Dictionary = {}, timer_state_machine = {}, timer_update = {}) -> void:
+    # initialize member variables
     cols = x
     rows = y
     for a in range(cols * rows):
@@ -52,6 +53,7 @@ func _init(x: int, y: int, init_state: int = 0, state_machine: Dictionary = {}, 
     timer_states = timer_state_machine.duplicate()
     time_update = timer_update.duplicate()
 
+    # set up timer
     timer = Timer.new()
     timer.one_shot = false
     timer.autostart = true

@@ -80,7 +80,6 @@ func add_vol(bus: BUS, volume: float):
             music_vol = clampf(music_vol + volume, 0, 1)
             AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(music_vol))
         BUS.SFX:
-            sfx_vol += volume
             sfx_vol = clampf(sfx_vol + volume, 0, 1)
             AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(sfx_vol))
 

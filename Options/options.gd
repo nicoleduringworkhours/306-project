@@ -17,12 +17,15 @@ func _ready() -> void:
 
 ## reload the volume sliders/values with the current values
 func load_opts() -> void:
+    # master bus
     var v: float = Sound.get_vol(Sound.BUS.MASTER)
     mas_lab.text = str(int(v* 100)) + "%"
     mas_slider.value = v
+    # music bus
     v = Sound.get_vol(Sound.BUS.MUSIC)
     mus_lab.text = str(int(v* 100)) + "%"
     mus_slider.value = v
+    # sfx bus
     v = Sound.get_vol(Sound.BUS.SFX)
     sfx_lab.text = str(int(v* 100)) + "%"
     sfx_slider.value = v

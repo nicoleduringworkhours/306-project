@@ -37,6 +37,7 @@ func data(r: int, c: int) -> PlotMap:
 ## set-up. Creates a TM_Manager model, does initial renders of all tiles
 ## actions on tiles
 func _ready() -> void:
+    # init automata grid for the model
     ag = AutomataGrid.new(cols, rows, GRASS, state_machine, timer_states, time_update)
     ag.cell_update.connect(_cell_update)
     for i in range(rows):
@@ -70,6 +71,7 @@ func _cell_update(x: int, y: int, state) -> void:
 ## handle hoe press at location [param loc]
 func hoe_press(loc: Vector2):
     var a = local_to_map(loc)
+    # valid press
     if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
         Sound.play_sfx(Sound.EFFECT.INTERACT)
         ag.transition(a.x,a.y,actions.TILL)
@@ -77,6 +79,7 @@ func hoe_press(loc: Vector2):
 ## handle watering can press at location [param loc]
 func water_press(loc: Vector2):
     var a = local_to_map(loc)
+    # valid press
     if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
         Sound.play_sfx(Sound.EFFECT.INTERACT)
         ag.transition(a.x,a.y,actions.WATER)

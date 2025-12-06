@@ -10,8 +10,8 @@ func _ready() -> void:
 
 ## handle input
 func _input(event) -> void:
-    ## when the pause action is pressed, pause (if the options menu is
-    ## not open)
+    # when the pause action is pressed, pause (if the options menu is
+    # not open)
     if event.is_action_pressed("pause") and not opts.is_visible():
         _pause()
 
