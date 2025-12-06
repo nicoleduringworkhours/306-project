@@ -3,7 +3,7 @@ extends Node2D
 @onready var tlm = $ToolMenu
 @onready var hud: Money = $Hud
 @onready var seed_bag_view: SeedBagView = $SeedBagView
-var seed_bag: SeedBag = SeedBag.new()
+var seed_bag: SeedBag
 
 signal water(earl: Vector2)
 signal hoe(earl: Vector2)
@@ -27,15 +27,17 @@ func _ready() -> void:
     tlm.money_change.connect(hud.add_money)
     tlm.set_money_ref(hud.get_money)
 
+    seed_bag = SeedBag.new()
     seed_bag_view.set_seed_bag(seed_bag)
     seed_bag.set_money(hud)
     seed_bag.unlock_crop(Crop.crop.BEAN)
     seed_bag.set_crop(Crop.crop.BEAN)
     var n_crops = Crop.crop.size()-1 # -1 because we don't include Crop.crop.NONE
     for i in range(n_crops):
-        %SeedGrid.get_child(i).pressed.connect(func ():
+        get_node("SeedBagView/%SeedGrid").get_child(i).pressed.connect(func ():
             Sound.play_sfx(Sound.EFFECT.UI_CLICK)
-            seed_bag.set_crop(Crop.crop.get(i+1))
+            seed_bag.set_crop(Crop.crop.get(Crop.crop.keys()[i+1]))
+            seed_bag.unlock_crop(Crop.crop.get(Crop.crop.keys()[i+1]))
         )
 
 func _unhandled_input(event) -> void:
