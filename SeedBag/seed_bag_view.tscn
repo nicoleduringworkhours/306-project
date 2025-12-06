@@ -1,22 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0qraxo3c3v01"]
+[gd_scene load_steps=3 format=3 uid="uid://ce51grxyfq1xq"]
 
-[ext_resource type="Texture2D" uid="uid://e5bswr0bhnnw" path="res://Assets/SeedBag/seed_bag_background.png" id="1_41hfe"]
-[ext_resource type="Script" uid="uid://bgkmxa2k54eq2" path="res://SeedBag/seed_bag.gd" id="1_wp4uc"]
+[ext_resource type="Script" uid="uid://de4ghjr8expf8" path="res://SeedBag/seed_bag_view.gd" id="1_d8nsq"]
+[ext_resource type="Texture2D" uid="uid://e5bswr0bhnnw" path="res://Assets/SeedBag/seed_bag_background.png" id="2_jiywe"]
 
-[node name="SeedBag" type="Control"]
+[node name="SeedBagView" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_wp4uc")
+script = ExtResource("1_d8nsq")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 0
 offset_right = 334.0
 offset_bottom = 403.0
-texture = ExtResource("1_41hfe")
+texture = ExtResource("2_jiywe")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Background"]
 layout_mode = 1

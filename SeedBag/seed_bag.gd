@@ -1,4 +1,4 @@
-class_name SeedBag
+class_name SeedBag extends RefCounted
 
 signal seed_bag_updated()
 

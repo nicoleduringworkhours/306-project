@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cklgfxun7hog5"]
+
+[ext_resource type="Script" uid="uid://bwogbrummpih0" path="res://SeedBag/seed_bag_button.gd" id="1_60a6j"]
+
+[node name="SeedBagButton" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+script = ExtResource("1_60a6j")

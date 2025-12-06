@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bohhsjqh0x5bo" path="res://PauseMenu/pause.tscn" id="2_i2arf"]
 [ext_resource type="PackedScene" uid="uid://bl5ptxwyso3t3" path="res://FarmPlot/farm_plot.tscn" id="3_1kil2"]
 [ext_resource type="PackedScene" uid="uid://deunk8vyc4fs6" path="res://ToolMenu/tool_menu.tscn" id="4_5cvvu"]
-[ext_resource type="PackedScene" uid="uid://b0qraxo3c3v01" path="res://SeedBag/seed_bag.tscn" id="5_ed8b8"]
+[ext_resource type="PackedScene" uid="uid://ce51grxyfq1xq" path="res://SeedBag/seed_bag_view.tscn" id="5_7rc83"]
 [ext_resource type="PackedScene" uid="uid://b5ldw3cn7j0e4" path="res://HUD/money_hud.tscn" id="6_i2arf"]
 
 [node name="Node2D" type="Node2D"]
@@ -21,11 +21,7 @@ offset_top = 591.0
 offset_right = 523.0
 offset_bottom = 691.0
 
-[node name="SeedBag" parent="." instance=ExtResource("5_ed8b8")]
-offset_left = 808.0
-offset_top = 159.0
-offset_right = 808.0
-offset_bottom = 159.0
+[node name="SeedBagView" parent="." instance=ExtResource("5_7rc83")]
 
 [node name="tip" type="Label" parent="."]
 offset_left = 13.0
