@@ -24,3 +24,6 @@ mono_crash.*.json
 .editorconfig
 
 venv/
+
+# Syncthing folder
+.stfolder
