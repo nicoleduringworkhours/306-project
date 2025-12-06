@@ -36,8 +36,8 @@ func _ready():
     model.money_change.connect(money_change.emit)
     add_child(model.get_timer())
 
-    # bind buttons to model changes
-    for t in ToolModel.tools.keys():
+    # bind buttons to model changes for shovel, hoe, watering can
+    for t in ToolModel.tools:
         tool_buttons[ToolModel.tools[t]].pressed.connect( \
             model.set_tool.bind(ToolModel.tools[t]))
 
@@ -52,10 +52,12 @@ func set_money_ref(money_func: Callable) -> void:
 
 ## Sets the current tool selection and updates related UI/behaviour.
 func on_model_changed():
+    # change the tool highlighted
     var t = model.get_tool()
     tool_selected.emit(t)
     highlight_tool(t)
 
+    # change the cursor icon
     var tool_icon = tool_buttons[t].texture_normal
     if tool_icon:
         Input.set_custom_mouse_cursor(tool_icon)
@@ -68,10 +70,12 @@ func on_model_changed():
 func highlight_tool(t: ToolModel.tools):
     var button = tool_buttons[t]
 
+    # un-highlight the prev button
     if prev_button and prev_button != button:
         animate_tween(prev_button, Vector2.ONE)
         prev_button.modulate = Color(1, 1, 1, 1)
 
+    # highlight the new button
     prev_button = button
     button.modulate = Color(1, 1, 0, 1)
     animate_tween(button, Vector2(1.2, 1.2))
@@ -104,5 +108,8 @@ func _unhandled_input(event):
 func get_selected_tool() -> ToolModel.tools:
     return model.get_tool()
 
+## unlock fertilizer if possible, and return true if fertilizer is
+## unlocked
 func fertilizer_unlocked() -> bool:
+    model.unlock_fertilizer()
     return model.fertilizer_unlocked()

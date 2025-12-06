@@ -44,6 +44,7 @@ var time_update: Dictionary
 ## [param timer_state_machine] optional parameter for how states
 ##      transition on timeout, default is no transitions, can be set later
 func _init(x: int, y: int, init_state: int = 0, state_machine: Dictionary = {}, timer_state_machine = {}, timer_update = {}) -> void:
+    # initialize member variables
     cols = x
     rows = y
     for a in range(cols * rows):
@@ -52,6 +53,7 @@ func _init(x: int, y: int, init_state: int = 0, state_machine: Dictionary = {}, 
     timer_states = timer_state_machine.duplicate()
     time_update = timer_update.duplicate()
 
+    # set up timer
     timer = Timer.new()
     timer.one_shot = false
     timer.autostart = true
@@ -117,12 +119,12 @@ func get_tile(x: int, y: int) -> int:
     if x >= 0 and y >= 0 and x < cols and y < rows:
         return tile_data[x + y*cols]
     else:
-        return -1
+        return -1 # invalid
 
 func set_tile(x: int, y: int, state: int) -> void:
     if x >= 0 and y >= 0 and x < cols and y < rows:
         tile_data[x + y*cols] = state
-        cell_update.emit(x, y, state)
+        cell_update.emit(x, y, state) # publish update
 
 func get_cols() -> int:
     return cols

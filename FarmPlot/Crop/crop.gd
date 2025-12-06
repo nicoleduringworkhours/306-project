@@ -1,7 +1,7 @@
 extends TileMapLayer
 class_name CropMap
 
-##Manages crop growth, planting and harvesting on tilemap grid
+## Manages crop growth, planting and harvesting on tilemap grid
 ## CropMap uses AutomataGrid to manage crop growth and transitions. The crop
 ## system uses the following encoding for each crop state:
 ## 0: Empty
@@ -9,23 +9,18 @@ class_name CropMap
 ## Negative values : timer-based growth states
 
 # Controller signals
-signal seed_planted(crop_type: Crop.crop)
+signal money_change(val: int) ## emitted to change player money by [param val]
 
 # Model
-## number of rows in crop grid
-var rows: int
+var rows: int ## number of rows in crop grid
 
-## number of columns in crop grid
-var cols: int
+var cols: int ## number of columns in crop grid
 
-## total number of growth stages for crops 
-const STAGES: int = 5
+const STAGES: int = 5 ## total number of growth stages for crops
 
-## time in seconds for each growth stage
-const STAGE_TIME: int = 2
+const STAGE_TIME: int = 2 ## time in seconds for each growth stage
 
-## reference to check if player has enough money for planting
-var money_check: Callable
+var money_check: Callable ## function to check if player has enough money for planting
 
 enum actions {ADVANCE=-1, FAIL=-2, TRY_GROW=-3, HARVEST=-4} ## actions on tiles
 
@@ -35,34 +30,26 @@ var state_machine: Dictionary
 ## timeout based state transitions, of the form state: (state, time in seconds)
 var timer_states: Dictionary = {}
 
-## tile manager model
-var ag: AutomataGrid
+var ag: AutomataGrid ## tile manager model
 
-##plotmap ref
-var pm: PlotMap
+var pm: PlotMap ## reference to the farm plot, to check ground state
 
-## Initializes the crop map dimensions and plot ref
-## @param r : number of rows in the grid
-## @param c : number of cols in the grid
-## @param p : ref to the plotmap
-
-## @return : return self
+## Initializes the crop map with [param r] rows, [param c] cols, and
+## the [param p] farm plot. Returns the initialized object
 func data(r: int, c: int, p: PlotMap) -> CropMap:
     rows = r
     cols = c
     pm = p
     return self
 
-## Sets the money checking function ref
-## @param money_func : returns true if player can afford crop costs
+## Sets the money checking function ref to be [param money_func]
 func set_money_ref(money_func: Callable) -> void:
     money_check = money_func
 
-## Intializes the crop system and automata grid, creates all state transitions
-## for each crop type and growth stage and connects visual update signals.
-## Creates a TM_Manager model, does initial renders of all tiles
-## actions on tiles
+## Intializes the crop system by algorithmically generating states for
+## all crops and does initial renders of all tiles
 func _ready() -> void:
+    # algorithmically generate growth stages for each crop
     for c in Crop.crop.values():
         if c != Crop.crop.NONE:
             for i in range(STAGES - 1):
@@ -85,62 +72,39 @@ func _ready() -> void:
 
     add_child(ag.get_timer())
 
-# View
-
-## Updates tilemap when crop changes and calls for growth transitions for
-## watered crops.
-## @param x : column coord of the cell
-## @param y : row coord of the cell
-## @param state : new state value of the cell
-
+## Updates the cell at location ([param x], [param y]) to state [param state]
 func _cell_update(x: int, y: int, state: int) -> void:
-    if state == Crop.crop.NONE:
-        #clear tile (no crop)
+    if state == Crop.crop.NONE: #clear tile (no crop)
         set_cell(Vector2i(x,y), 0, Vector2i(-1, 0))
-    elif state > 0:
+    elif state > 0: # crop has grown, try to keep growing
         set_cell(Vector2i(x,y), 0, Vector2i(state / 10, state % 10))
         if pm.is_watered(x,y):
             ag.transition(x,y, actions.TRY_GROW)
-    elif pm.is_watered(x,y):
+    elif pm.is_watered(x,y): # crop has finished its growth check, advance to next stage
         ag.transition(x,y, actions.ADVANCE)
-    else:
+    else: # crop has finished its growth check and failed.
         ag.transition(x,y, actions.FAIL)
 
-# Controller
-
-## emitted when player money should change
-signal money_change(val: int)
-
-## Handles hoe tool for harvesting crops
-## @param loc : world position where hoe was used
+## Handles hoe tool press at [param loc] for harvesting crops
 func hoe_press(loc: Vector2):
     var a = local_to_map(loc)
     if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
         _try_harvest(a.x,a.y)
 
-## Handles shovel tool for planting seeds.
-## Plants a seed if the location meets all the required conditions including
-## being able to afford the seed.
-## @param loc : world position where shoevel was used
-## @param __seed : type of crop to plant
-
+## Handles shovel tool press at [param loc] for planting the seed [param _seed]
 func shovel_press(loc: Vector2, _seed: Crop.crop) -> void:
     var a = local_to_map(loc)
     if a.x >= 0 and a.x <= cols and a.y >= 0 and a.y <= rows:
-        # check if can plant
+        # check if can plant, and has money
         if pm.can_plant(a.x,a.y) and ag.get_tile(a.x,a.y) == 0 \
                 and money_check.call() >= Crop.crop_cost[_seed]:
             money_change.emit(-Crop.crop_cost[_seed])
             ag.transition(a.x,a.y, _seed)
         _try_harvest(a.x,a.y)
-    #Sound.play_sfx(Sound.EFFECT.INTERACT)
+        Sound.play_sfx(Sound.EFFECT.INTERACT)
 
-## Attempts to harvest a given crop. This will only succeed if the crop is
-## harvestable. Emits money_change signal with crop value on successful harvest
-## @param x : col coord of the crop
-## @param y : row coord of the crop
-
-func _try_harvest(x: int, y: int):
+## Attempts to harvest a crop at location ([param x], [param y])
+func _try_harvest(x: int, y: int) -> void:
     var val = ag.get_tile(x, y)
     # check if crop is harvestable
     if val != 0 and Crop.crop_val.has(val-10):
@@ -148,29 +112,24 @@ func _try_harvest(x: int, y: int):
 
         ag.transition(x,y, actions.HARVEST)
         # check if harvest succeeded
-        if ag.get_tile(x, y) == Crop.crop.NONE: # harvest success
-            money_change.emit(val) #emit signal to add money
+        if ag.get_tile(x, y) == Crop.crop.NONE:
+            money_change.emit(val)
 
-## Notifies the crop system that a tile was watered leading to a growth attempt
-## at that location.
-## @param x : col coord of the tile
-## @param y : row coord of the tile
+## alert the crop system that the ground at location
+## ([param x], [param y]) was watered
 func got_watered(x: int, y: int):
     ag.transition(x, y, actions.TRY_GROW)
 
-## Handles fertilizer tool to instantly mature crops (make it harvestable)
-## @param loc : world position where fertilizer was applied
-
+## Handles fertilizer tool press at location [param loc]
+## to instantly mature crops (make it harvestable)
 func fertilizer_press(loc: Vector2) -> void:
     var a = local_to_map(loc)
     # bounds check
     if a.x >= 0 and a.x < cols and a.y >= 0 and a.y < rows:
         var cur_state: int = ag.get_tile(a.x, a.y)
-        
         if cur_state < 0:
             cur_state = (abs(cur_state) / 100) as int
 
         if cur_state != 0:
-            ## make crop fully grown
-            ag.set_tile(a.x, a.y, (cur_state % 10) + 10) 
+            ag.set_tile(a.x, a.y, (cur_state % 10) + 10) # make crop fully grown
             Sound.play_sfx(Sound.EFFECT.INTERACT)
