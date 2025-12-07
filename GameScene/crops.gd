@@ -13,45 +13,43 @@ enum crop {
     CORN,
 }
 
-# FIX: not balanced
 const crop_val: Dictionary[crop, int] = {
     crop.NONE: 0,
-    crop.BEAN: 1,
-    crop.TOMATO: 2,
-    crop.EGGPLANT: 4,
-    crop.PINEAPPLE: 5,
-    crop.WHEAT: 10,
-    crop.STRAWBERRY: 10,
-    crop.POTATO: 11,
-    crop.ORANGE: 3,
-    crop.CORN: 8,
+    crop.BEAN: 3,
+    crop.TOMATO: 28,
+    crop.EGGPLANT: 40,
+    crop.PINEAPPLE: 200,
+    crop.WHEAT: 21,
+    crop.STRAWBERRY: 50,
+    crop.POTATO: 5,
+    crop.ORANGE: 100,
+    crop.CORN: 12,
 }
 
 const crop_cost: Dictionary[crop, int] = {
     crop.NONE: 0,
     crop.BEAN: 1,
-    crop.TOMATO: 2,
-    crop.EGGPLANT: 4,
-    crop.PINEAPPLE: 5,
-    crop.WHEAT: 2,
-    crop.STRAWBERRY: 10,
-    crop.POTATO: 5,
-    crop.ORANGE: 3,
-    crop.CORN: 6,
+    crop.TOMATO: 17,
+    crop.EGGPLANT: 25,
+    crop.PINEAPPLE: 100,
+    crop.WHEAT: 13,
+    crop.STRAWBERRY: 30,
+    crop.POTATO: 2,
+    crop.ORANGE: 60,
+    crop.CORN: 5,
 }
 
-# FIX: not balanced
 const crop_unlock_cost: Dictionary[crop, int] = {
     crop.NONE: 0,
     crop.BEAN: 0,
-    crop.TOMATO: 1,
-    crop.EGGPLANT: 1,
-    crop.PINEAPPLE: 2,
-    crop.WHEAT: 3,
-    crop.STRAWBERRY: 5,
+    crop.TOMATO: 100,
+    crop.EGGPLANT: 150,
+    crop.PINEAPPLE: 600,
+    crop.WHEAT: 50,
+    crop.STRAWBERRY: 200,
     crop.POTATO: 8,
-    crop.ORANGE: 13,
-    crop.CORN: 21,
+    crop.ORANGE: 400,
+    crop.CORN: 15,
 }
 
 const crop_texture: Dictionary[crop, Resource] = {
