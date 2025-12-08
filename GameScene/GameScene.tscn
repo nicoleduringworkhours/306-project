@@ -14,6 +14,7 @@ script = ExtResource("1_hvuor")
 z_index = 4
 
 [node name="farmplot" parent="." instance=ExtResource("3_1kil2")]
+position = Vector2(32, 32)
 
 [node name="ToolMenu" parent="." instance=ExtResource("4_5cvvu")]
 offset_left = 523.0
