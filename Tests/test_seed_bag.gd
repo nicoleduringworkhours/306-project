@@ -45,6 +45,7 @@ func test_unlocking():
     # Test can't afford unlock
     seed_bag.unlock_crop(Crop.crop.TOMATO)
     assert_false(seed_bag.seed_unlocked[Crop.crop.TOMATO])
+	money.set_money(50)
     # Test money is removed
     seed_bag.unlock_crop(Crop.crop.WHEAT)
     assert_true(seed_bag.seed_unlocked[Crop.crop.WHEAT])
