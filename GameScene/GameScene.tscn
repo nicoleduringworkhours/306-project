@@ -29,14 +29,15 @@ offset_bottom = 282.0
 
 [node name="tip" type="Label" parent="."]
 offset_left = 13.0
-offset_top = 511.0
-offset_right = 349.0
-offset_bottom = 638.0
+offset_top = 490.0
+offset_right = 384.0
+offset_bottom = 643.0
 text = "Press Escape to pause
 Use the hoe to till dirt
 Use the Shovel to plant crops
 Use the Water can to help crops grow
-Harvest grown crops with the shovel or the hoe"
+Harvest grown crops with the shovel or the hoe
+Use fertilizer ($30) to instantly grow crops (300s)"
 
 [node name="Hud" parent="." instance=ExtResource("6_i2arf")]
 offset_left = 1005.0
