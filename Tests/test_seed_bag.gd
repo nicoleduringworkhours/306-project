@@ -27,6 +27,7 @@ func test_setters():
     assert_eq(seed_bag.current_crop, Crop.crop.NONE)
     assert_false(seed_bag.seed_states[Crop.crop.TOMATO])
     seed_bag.seed_unlocked[Crop.crop.TOMATO] = true
+    seed_bag.set_crop(Crop.crop.TOMATO)
     assert_eq(seed_bag.current_crop, Crop.crop.TOMATO)
     assert_true(seed_bag.seed_states[Crop.crop.TOMATO])
     # Test set_money
