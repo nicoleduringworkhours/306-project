@@ -23,6 +23,10 @@ Sound="*res://Sound/sound.gd"
 
 gdscript/warnings/integer_division=0
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+
 [input]
 
 pause={
